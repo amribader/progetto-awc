@@ -39,7 +39,7 @@ function customizePage() {
 	console.log(results)
 	//console.log(utenti.findIndex(results))
 
-	if (!results) {//restituisce true se l'array è vuoto
+	if (!results) {//SE NON TROVA UN UTENTE CON QUELLA STESSA SESISONE restituisce true se l'array è vuoto
 		alert("dentro if")
 		return;
 	}
@@ -112,7 +112,9 @@ function getCategories() {
 getCategories();
 
 function showCategories(results) {
-	div_categories = document.getElementById("categories")
+	let cards=[]
+
+	//div_categories = document.getElementById("categories")
 	/* for(i=0;i<results.items.length;i++){
 		divCategories.innerHTML+= results.items[i].icons 
 	} */
@@ -120,19 +122,48 @@ function showCategories(results) {
 	console.log("resultCat", typeof results.categories.items)
 
 	results.categories.items.forEach(element => {          // qui mostriamo le categorie tramite un for 
-		console.log(element)
-		createCard(div_categories, element)
+		//console.log(element)
+		cards.push(element)
+		//div_categories.innerHTML+="<div id='categoryChild' class='row'></div>"
+		
+		//createCard(categoryChild, element)
+		//div_categories.innerHTML+="<br>"
 	});
+	creaGriglia(cards)
 }
 
-
+/* 
 function createCard(div, cat_elem) {//id del div,elem,
+	categoryChild=document.getElementById(div)
 	console.log(cat_elem)
 	console.log(cat_elem.icons.url)
 
 	cat_elem.icons.forEach(element => {
 		console.log(element.url)
 	});
-
-	div.innerHTML += "<div class='card' style='width: 18rem;'><img src='" + cat_elem.icons[0].url + "' width=" + cat_elem.icons.width + " height='" + cat_elem.icons.height + "' class='card-img-top' alt='" + cat_elem.name + "  '><div class='card-body'><p class='card-text'>" + cat_elem.name + "</p></div></div>"
+*/
+	// div.innerHTML += "<div class='col card'><img src='" + cat_elem.icons[0].url + "' width='" + cat_elem.icons.width + "'height='" + cat_elem.icons.height + "' class='card-img-top' alt='" + cat_elem.name + "'><div class='card-body box'><p class='card-text box_details'>" + cat_elem.name + "'</p></div></div>" */
+	//div.innerHTML+="<br>"
+/* }
+"<div class='card' style='width: 18rem;'> <img src='' class='card-img-top' alt=''><div class='card-body'><p class='card-text'>.</p></div></div>"
+ */ 
+function creaGriglia(cat_elem){
+	let c = 0;
+	console.log(cat_elem)
+    div = document.getElementById("container");
+    for (i = 0; i < 5; i++) {//righe
+      div.innerHTML += "<div class='row' id='row"+i+"'>"
+      for (j = 0; j < 4; j++) {
+        document.getElementById("row"+i).innerHTML += "<div class='col-sm'>"
+		/* createCard("row"+i,) */
+        document.getElementById("row"+i).innerHTML += "<div class='card' style='width: 18rem;'> <img src=' " + cat_elem[c].icons[0].url +"' width='" + cat_elem[c].icons.width + "'height='" + cat_elem[c].icons.height +" ' class='card-img-top' alt='" + cat_elem[c].name + "'><div class='card-body'><p class='card-text'>" + cat_elem[c].name + "</p></div></div>"
+        document.getElementById("row"+i).innerHTML += "</div>"
+		c++
+      }
+      div.innerHTML += "</div>"//fine riga
+    }
+    /* div.innerHTML+="</div>"  */
 }
+
+
+//ora dobbiamo mettere i generi cliccabili e discutere se tenere html1 o 2 

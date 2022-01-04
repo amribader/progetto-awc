@@ -303,7 +303,7 @@ header {
 .home_main{
     width: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; 
     margin-top: -80px;
 }
 .hm_gradient-1{
@@ -389,6 +389,7 @@ header {
     row-gap: 16px;
     padding-left: 10px;
     padding-right: 10px;
+    
     margin: 0px;
 }
 .hm_card{
