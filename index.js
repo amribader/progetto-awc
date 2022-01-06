@@ -16,7 +16,7 @@ const sessionID = window.sessionStorage.getItem("sessionID");
 //console.log(users)
 
 if (!sessionID) { //se è undifined
-    window.location.replace("login.html");
+    window.location.replace("index.html");
 }
 
 let utenteLoggato;
