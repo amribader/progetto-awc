@@ -3,6 +3,12 @@
 
 //condition ? exprIfTrue : exprIfFalse 
 
+
+const AccountSetting = document.getElementById("AccountSetting");
+AccountSetting.style.display = "none";
+
+
+
 let users = [];
 
 users = JSON.parse(window.localStorage.users); //stessa cosa di window.localStorage.getItem("users"); 
@@ -189,8 +195,8 @@ function createCardGrid(cat_elem) {
             //console.log(cat_elem[c]);
             console.log(c);
 
-            div.innerHTML += "<label  class='card'><input name='chk' id='"+cat_elem[c].id+"' class='card__input' type='checkbox'/><div class='card__body'><div class='card__body-cover'><img class='card__body-cover-image' src='" + cat_elem[c].icons[0].url + "' width='" + cat_elem[c].icons[0].width + "'height='" + cat_elem[c].icons[0].height + " ' alt='" + cat_elem[c].name + "' /><span class='card__body-cover-checkbox'> <svg class='card__body-cover-checkbox--svg' viewBox='0 0 12 10'><polyline points='1.5 6 4.5 9 10.5 1'></polyline></svg></span></div><header class='card__body-header'><h2 class='card__body-header-title'>" + cat_elem[c].name + "</h2><p class='card__body-header-subtitle'>" + cat_elem[c].name + "</p></header></div>"
-    
+            div.innerHTML += "<label  class='card'><input name='chk' id='" + cat_elem[c].id + "' class='card__input' type='checkbox'/><div class='card__body'><div class='card__body-cover'><img class='card__body-cover-image' src='" + cat_elem[c].icons[0].url + "' width='" + cat_elem[c].icons[0].width + "'height='" + cat_elem[c].icons[0].height + " ' alt='" + cat_elem[c].name + "' /><span class='card__body-cover-checkbox'> <svg class='card__body-cover-checkbox--svg' viewBox='0 0 12 10'><polyline points='1.5 6 4.5 9 10.5 1'></polyline></svg></span></div><header class='card__body-header'><h2 class='card__body-header-title'>" + cat_elem[c].name + "</h2><p class='card__body-header-subtitle'>" + cat_elem[c].name + "</p></header></div>"
+
 
             //div.innerHTML += "<label id='"+cat_elem[c].id+"' class='card' ><input name='chk' class='card__input' type='checkbox'/><div class='card__body'><div class='card__body-cover'><img class='card__body-cover-image' src='" + cat_elem[c].icons[0].url + "' width='" + cat_elem[c].icons[0].width + "'height='" + cat_elem[c].icons[0].height + " ' alt='" + cat_elem[c].name + "' /><span class='card__body-cover-checkbox'> <svg class='card__body-cover-checkbox--svg' viewBox='0 0 12 10'><polyline points='1.5 6 4.5 9 10.5 1'></polyline></svg></span></div><header class='card__body-header'><h2 class='card__body-header-title'>" + cat_elem[c].name + "</h2><p class='card__body-header-subtitle'>" + cat_elem[c].name + "</p></header></div>"
 
@@ -200,12 +206,16 @@ function createCardGrid(cat_elem) {
 }
 
 function salvaGeneri() {
-    var userCard = [];
+    let userCard = [];//localStorage.users[users.indexOf(utenteLoggato)].favoriteCategories;
+
+    userCard = users[users.indexOf(utenteLoggato)].favoriteCategories;
+
+
     var element = document.getElementsByName('chk');
     console.log(element);
     element.forEach(element => {
         console.log(element);
-        
+
         if (element.checked) {
             cardId = document.getElementById(element.id)
             console.log(cardId);
@@ -216,7 +226,6 @@ function salvaGeneri() {
                     userCard.push(elem);
                 }
             });
-
         }
     });
 
@@ -233,3 +242,21 @@ function salvaGeneri() {
     // Save back to localStorage
     localStorage.setItem('users', JSON.stringify(users));
 }
+
+const btnSend = document.getElementById("btnSend");
+const container = document.getElementById("container");
+
+
+btnSend.addEventListener('click', () => {
+    container.style.display = "none";
+
+    Swal.fire(                                       // alert di successo
+        'Preferenze salvate con successo!',
+        'Ora puoi iniziare a creare le tue playlist!',
+        'success'
+    )
+    AccountSetting.style.display = "block";
+});
+
+
+
