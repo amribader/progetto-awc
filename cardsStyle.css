@@ -1,10 +1,10 @@
 .card {
     --background: #fff;
-    --background-checkbox: #0082ff;
-    --background-image: #fff, rgba(0, 107, 175, 0.2);
+    --background-checkbox: #00ff15;
+    --background-image: rgb(20, 177, 14), rgba(0, 107, 175, 0.2);
     --text-color: #666;
     --text-headline: #000;
-    --card-shadow: #0082ff;
+    --card-shadow: #00ff2a;
     --card-height: auto;
     --card-radius: 12px;
     --header-height: 47px;
@@ -194,8 +194,9 @@
   .containerDiv {
 
    
-    display: flex;
-    font-family: "Inter", Arial;
+    display: flex;/* 
+    font-family: "Inter", Arial; */
+    font-family: 'Oswald', sans-serif;
     justify-content: center;
     align-items: center;
     
@@ -215,4 +216,15 @@
     border: 3px solid green;
     padding: 10px;
   
+  }
+
+  .form-control{
+    width: 100px;
+  }
+
+  .center{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
   }

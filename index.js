@@ -3,11 +3,20 @@
 
 //condition ? exprIfTrue : exprIfFalse 
 
+function hideElement(id) {
+	document.getElementById(id).style.display = "none";
+}
+function showElement(id) {
+	document.getElementById(id).style.display = "block";
+}
 
-const AccountSetting = document.getElementById("AccountSetting");
-AccountSetting.style.display = "none";
+const SettingsAccount = document.getElementById("SettingsAccount");
 
+SettingsAccount.style.display = "none";
 
+modifyProfile.style.display="none"; //nico
+
+modifyAccount.style.display="none"; //io
 
 let users = [];
 
@@ -66,7 +75,7 @@ function customizePage() {
     */
     const personal_info = document.getElementById("container_personal_info")
 
-    personal_info.innerHTML = "<span id='span' class='home_text'><small>" + results.nome + "</small><h1 class=''>" + results.nome + "</h1><h3>" + results.nome + ".</h3><a class='green_btn' role='button' href='#'>Web Player</a></span>";
+    personal_info.innerHTML = "<span id='span' class='home_text'><small>" + results.email + "</small><h1 class=''>" + results.nome + "</h1><h3>" + results.password + "</h3><a class='green_btn' role='button' href='#'>Web Player</a></span>";
 
     //div.innerHTML="<br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br>";
 
@@ -185,7 +194,7 @@ function creaGriglia(cat_elem) {
 
 function createCardGrid(cat_elem) {
     let c = 0;
-    /* console.log(cat_elem)
+    /*//console.log(cat_elem)
     console.log(cat_elem[0])
     console.log(cat_elem[0].id) */
     div = document.getElementById("container");
@@ -255,8 +264,141 @@ btnSend.addEventListener('click', () => {
         'Ora puoi iniziare a creare le tue playlist!',
         'success'
     )
-    AccountSetting.style.display = "block";
+    SettingsAccount.style.display = "block";
 });
 
+/* 
+const elem = document.getElementById("account");
+const modifyAccount = document.getElementById("modifyAccount"); */
+
+const form = document.getElementById('formModifyAccount');
+form.addEventListener('submit', logSubmit);
 
 
+function logSubmit(event) {
+    console.log(event);
+    let elem = document.querySelectorAll(".form-check-input");
+
+    elem.forEach(element => {
+        if(element.checked){
+            console.log(element)
+            console.log(element.value)//value email
+            console.log(document.getElementById(element.value))
+            console.log(document.getElementById(element.value).value)//mail associata al campo
+            
+            change(element)
+
+        }
+    });
+
+    
+    
+
+    event.preventDefault();
+}
+
+function change(element){
+    let c = element.value;
+    console.log(typeof element.value)
+    console.log(c)
+    console.log(typeof c)
+    console.log(users[users.indexOf(utenteLoggato)])
+    console.log(users[users.indexOf(utenteLoggato)][c])
+    //console.log(users[users.indexOf(utenteLoggato)].element.value)
+    console.log(document.getElementById(element.value).value)
+    //const Account = {username:"Fiat", mail:"500", password:"white"};
+   users[users.indexOf(utenteLoggato)][c] = document.getElementById(element.value).value
+   //users[users.indexOf(utenteLoggato)]['favoriteCategories'] = userCard;
+
+    // Save back to localStorage
+    localStorage.setItem('users', JSON.stringify(users));
+    customizePage();
+}
+
+//modifyAccount.style.display = "none";
+
+ /*
+function settings() {
+
+    //modifyAccount.style.display = "block";
+
+    const username = document.getElementById("username");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const password_conferma = document.getElementById("password_conferma");
+
+    console.log(elem);
+
+    
+
+
+
+}
+
+ */
+/*
+
+var formelem = document.querySelectorAll(".form-check-input");
+
+// Select all checkboxes with the name 'settings' using querySelectorAll.
+var checkboxes = document.querySelectorAll(".form-check-input");
+let enabledSettings = []
+
+
+// Use Array.forEach to add an event listener to each checkbox.
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    enabledSettings = 
+      Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+      .map(i => i) // Use Array.map to extract only the checkbox values from the array of objects.
+      
+    console.log(enabledSettings)
+  })
+}); 
+*/
+function settingProfile(){
+    /* hideElement(document.getElementById('modifyAccount'));
+    showElement(document.getElementById('modifyProfile')); */
+    modifyAccount.style.display="none";
+    modifyProfile.style.display="block";
+        
+        if(users[users.indexOf(utenteLoggato)]['biografia']!="undefined" || users[users.indexOf(utenteLoggato)]['biografia']!=""){
+            document.getElementById("bio").value = users[users.indexOf(utenteLoggato)]['biografia'] 
+        }
+       
+
+    
+
+}
+
+cambiaNome.addEventListener('click', () => {
+   if(document.getElementById('profileName').value==""){
+    return
+   }
+    console.log(utenteLoggato.nome);
+    console.log(typeof nome)
+   //utenteLoggato.nome = document.getElementById('profileName').value;
+    users[users.indexOf(utenteLoggato)].nome = document.getElementById('profileName').value
+
+    
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    customizePage();
+});
+
+cambiaBio.addEventListener('click', () => {
+    users[users.indexOf(utenteLoggato)]['biografia'] = document.getElementById("bio").value
+    localStorage.setItem('users', JSON.stringify(users));
+    
+})
+
+function settingAccount(){
+    modifyProfile.style.display="none";
+    modifyAccount.style.display="block";
+}
+// Add new data to localStorage Array
+
+
+// Save back to localStorage
+//localStorage.setItem('users', JSON.stringify(users));
