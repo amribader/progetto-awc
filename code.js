@@ -180,7 +180,7 @@ formLogin.addEventListener('submit', (e) => {
 	if (results == -1) {//restituisce true se l'array è vuoto
 		e.preventDefault();
 		showElement("reg_alert");
-		gestisciDanger("Non esiste un utente con questo indirizzo mail");
+		gestisciDanger("Non esiste un utente con questo indirizzo mail o la password è errata!");
 		alert("non sono passato")
 		return;
 	}

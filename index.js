@@ -4,19 +4,27 @@
 //condition ? exprIfTrue : exprIfFalse 
 
 function hideElement(id) {
-	document.getElementById(id).style.display = "none";
+    document.getElementById(id).style.display = "none";
 }
 function showElement(id) {
-	document.getElementById(id).style.display = "block";
+    document.getElementById(id).style.display = "block";
 }
 
 const SettingsAccount = document.getElementById("SettingsAccount");
 
 SettingsAccount.style.display = "none";
 
-modifyProfile.style.display="none"; //nico
+modifyProfile.style.display = "none"; //nico
 
-modifyAccount.style.display="none"; //io
+modifyAccount.style.display = "none"; //io
+
+modifyPreference.style.display = "none";
+
+cancellaUtente.style.display = "none";
+
+document.getElementById('divPlaylist').style.display = "none";
+document.getElementById('CreaPlaylist').style.display = "none";
+
 
 let users = [];
 
@@ -74,8 +82,8 @@ function customizePage() {
         ////console.log(div);
     */
     const personal_info = document.getElementById("container_personal_info")
-
-    personal_info.innerHTML = "<span id='span' class='home_text'><small>" + results.email + "</small><h1 class=''>" + results.nome + "</h1><h3>" + results.password + "</h3><a class='green_btn' role='button' href='#'>Web Player</a></span>";
+    personal_info.innerHTML += "<div><img src='' class='img-fluid' alt=''></div>";
+    personal_info.innerHTML += "<span id='span' class='home_text'><small>" + results.email + "</small><h1 class=''>" + results.nome + "</h1><h3>" + results.password + "</h3><a class='green_btn' role='button' href='#'>Web Player</a></span>";
 
     //div.innerHTML="<br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br><br>CIAO<br>";
 
@@ -217,7 +225,12 @@ function createCardGrid(cat_elem) {
 function salvaGeneri() {
     let userCard = [];//localStorage.users[users.indexOf(utenteLoggato)].favoriteCategories;
 
-    userCard = users[users.indexOf(utenteLoggato)].favoriteCategories;
+    //userCard = users[users.indexOf(utenteLoggato)].favoriteCategories;
+
+    (users[users.indexOf(utenteLoggato)].favoriteCategories) ? userCard = users[users.indexOf(utenteLoggato)].favoriteCategories : "";
+
+
+
 
 
     var element = document.getElementsByName('chk');
@@ -280,24 +293,24 @@ function logSubmit(event) {
     let elem = document.querySelectorAll(".form-check-input");
 
     elem.forEach(element => {
-        if(element.checked){
+        if (element.checked) {
             console.log(element)
             console.log(element.value)//value email
             console.log(document.getElementById(element.value))
             console.log(document.getElementById(element.value).value)//mail associata al campo
-            
+
             change(element)
 
         }
     });
 
-    
-    
+
+
 
     event.preventDefault();
 }
 
-function change(element){
+function change(element) {
     let c = element.value;
     console.log(typeof element.value)
     console.log(c)
@@ -307,8 +320,8 @@ function change(element){
     //console.log(users[users.indexOf(utenteLoggato)].element.value)
     console.log(document.getElementById(element.value).value)
     //const Account = {username:"Fiat", mail:"500", password:"white"};
-   users[users.indexOf(utenteLoggato)][c] = document.getElementById(element.value).value
-   //users[users.indexOf(utenteLoggato)]['favoriteCategories'] = userCard;
+    users[users.indexOf(utenteLoggato)][c] = document.getElementById(element.value).value
+    //users[users.indexOf(utenteLoggato)]['favoriteCategories'] = userCard;
 
     // Save back to localStorage
     localStorage.setItem('users', JSON.stringify(users));
@@ -317,25 +330,25 @@ function change(element){
 
 //modifyAccount.style.display = "none";
 
- /*
+/*
 function settings() {
 
-    //modifyAccount.style.display = "block";
+   //modifyAccount.style.display = "block";
 
-    const username = document.getElementById("username");
-    const email = document.getElementById("email");
-    const password = document.getElementById("password");
-    const password_conferma = document.getElementById("password_conferma");
+   const username = document.getElementById("username");
+   const email = document.getElementById("email");
+   const password = document.getElementById("password");
+   const password_conferma = document.getElementById("password_conferma");
 
-    console.log(elem);
+   console.log(elem);
 
-    
+   
 
 
 
 }
 
- */
+*/
 /*
 
 var formelem = document.querySelectorAll(".form-check-input");
@@ -357,48 +370,282 @@ checkboxes.forEach(function(checkbox) {
   })
 }); 
 */
-function settingProfile(){
+function settingProfile() {
     /* hideElement(document.getElementById('modifyAccount'));
     showElement(document.getElementById('modifyProfile')); */
-    modifyAccount.style.display="none";
-    modifyProfile.style.display="block";
-        
-        if(users[users.indexOf(utenteLoggato)]['biografia']!="undefined" || users[users.indexOf(utenteLoggato)]['biografia']!=""){
-            document.getElementById("bio").value = users[users.indexOf(utenteLoggato)]['biografia'] 
-        }
-       
+    document.getElementById('cancellaUtente').style.display = "none";
+    modifyAccount.style.display = "none";
+    modifyPreference.style.display = "none";
+    divPlaylist.style.display = "none";
+    modifyProfile.style.display = "block";
 
-    
+    if (users[users.indexOf(utenteLoggato)]['biografia'] == undefined) {
+        users[users.indexOf(utenteLoggato)]['biografia'] = "inserisci una biografia"
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+
+    if (users[users.indexOf(utenteLoggato)]['biografia'] != 'undefined' || users[users.indexOf(utenteLoggato)]['biografia'] != "") {
+        document.getElementById("bio").value = users[users.indexOf(utenteLoggato)]['biografia']
+    }/* else{
+            users[users.indexOf(utenteLoggato)]['biografia']="inserisci una biografia"
+            localStorage.setItem('users', JSON.stringify(users));
+        } */
+
+
+
 
 }
 
 cambiaNome.addEventListener('click', () => {
-   if(document.getElementById('profileName').value==""){
-    return
-   }
+    if (document.getElementById('profileName').value == "") {
+        return
+    }
     console.log(utenteLoggato.nome);
     console.log(typeof nome)
-   //utenteLoggato.nome = document.getElementById('profileName').value;
+    //utenteLoggato.nome = document.getElementById('profileName').value;
     users[users.indexOf(utenteLoggato)].nome = document.getElementById('profileName').value
 
-    
+
     localStorage.setItem('users', JSON.stringify(users));
-    
+
     customizePage();
 });
 
 cambiaBio.addEventListener('click', () => {
     users[users.indexOf(utenteLoggato)]['biografia'] = document.getElementById("bio").value
     localStorage.setItem('users', JSON.stringify(users));
-    
+
 })
 
-function settingAccount(){
-    modifyProfile.style.display="none";
-    modifyAccount.style.display="block";
+cambiaImg.addEventListener('click', () => {
+    console.log(document.getElementById('formFile'))
+    formFile.style.display = "none";
+    immagineProfilo1.innerHTML += "<img src='https://www.italiamaresrl.it/images/header/001_2.jpg' width='10px'>";//voglio creare un array qui in javascript con link a delle immagini 
+    //e quando clicca sul bottone cambia immagine gliene genero una a caso prendendola dall'array
+    /* immagineProfilo1.innerHTML+= "<img src="+document.getElementById('formFile').value+">";
+    users[users.indexOf(utenteLoggato)]['fotoProfilo'] = document.getElementById("formFile").value; */
+
+})
+
+//mio 
+function settingAccount() {
+    document.getElementById('cancellaUtente').style.display = "none";
+    divPlaylist.style.display = "none";
+    modifyPreference.style.display = "none";
+    modifyProfile.style.display = "none";
+    modifyAccount.style.display = "block";
 }
 // Add new data to localStorage Array
 
 
 // Save back to localStorage
 //localStorage.setItem('users', JSON.stringify(users));
+
+function settingPreference() {
+    console.log("sono dentro settingPreference")
+    divPlaylist.style.display = "none";
+    document.getElementById('cancellaUtente').style.display = "none";
+    document.getElementById('modifyProfile').style.display = "none";
+    document.getElementById('modifyAccount').style.display = "none";
+    document.getElementById('modifyPreference').style.display = "block";
+
+
+    const table = document.getElementById('tablePreference');
+
+    let pref = users[users.indexOf(utenteLoggato)]["favoriteCategories"];
+    console.log(pref)
+    table.innerHTML = "";
+    pref.forEach(element => {
+        console.log(element)
+        table.innerHTML += "<tr><td>" + element.name + "</td><td><button id='btn" + element.id + "' onclick='settingPreferenceID(this)' type='button' class='btn btn-danger'>X</button></td></tr>"
+    });
+
+    /*
+        <tr>
+        <th scope="row">3</th>
+        <td colspan="2">Larry the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    */
+
+}
+
+/*
+Qundo viene cliccato un bottono rosso, allora scateno l'evetno per rimuovere quella 
+*/
+
+function settingPreferenceID(sorgente){
+    console.log(sorgente);
+    let preference = users[users.indexOf(utenteLoggato)]['favoriteCategories']
+    console.log((sorgente.id).slice(-((sorgente.id).length-3)))
+    const result = preference.filter(element => element.id == (sorgente.id).slice(-((sorgente.id).length-3))) 
+
+    console.log(preference)
+
+    result.forEach(element => {
+        console.log(element);
+        console.log(preference.indexOf(element));
+        preference.splice(preference.indexOf(element),1);
+    });
+
+    users[users.indexOf(utenteLoggato)]['favoriteCategories'] = preference;
+
+    localStorage.setItem('users', JSON.stringify(users));
+    
+    console.log(users);
+    const table = document.getElementById('tablePreference');
+    //table.innerHTML = "<tr><td>NON SONO PRESENTI PREFERENZE</td></tr>"
+    settingPreference();
+
+}
+
+/*
+const settingPreferenceID = document.getElementById("settingPreferenceID");
+
+settingPreferenceID.addEventListener('click', () => {
+
+    const redbtn = document.querySelectorAll(".btn-danger");
+    console.log(redbtn);
+
+
+    redbtn.forEach(element => {
+        console.log(element)
+        element.addEventListener('click', (this) => {
+            console.log(element)
+            console.log(this)
+        })
+    });
+
+});
+
+*/
+/*
+
+var formelem = document.querySelectorAll(".form-check-input");
+
+// Select all checkboxes with the name 'settings' using querySelectorAll.
+var checkboxes = document.querySelectorAll(".form-check-input");
+let enabledSettings = []
+
+
+// Use Array.forEach to add an event listener to each checkbox.
+checkboxes.forEach(function(checkbox) {
+  checkbox.addEventListener('change', function() {
+    enabledSettings = 
+      Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.
+      .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
+      .map(i => i) // Use Array.map to extract only the checkbox values from the array of objects.
+      
+    console.log(enabledSettings)
+  })
+}); 
+*/
+
+
+function deleteUser() {
+    document.getElementById('modifyProfile').style.display = "none";
+    document.getElementById('modifyAccount').style.display = "none";
+    document.getElementById('modifyPreference').style.display = "none";
+    document.getElementById('divPlaylist').style.display = "none";
+    document.getElementById('cancellaUtente').style.display = "block";
+}
+
+bottoneCancellaUtente.addEventListener('click', () => {
+    copiaUtentiSenzaCancellato = users
+    console.log(users)
+    /*  for(i=0;i<users.length;i++){
+         if users[i]==utenteLoggato{
+             
+         }
+     } */
+    copiaUtentiSenzaCancellato.splice(users.indexOf(utenteLoggato), 1)
+    localStorage.setItem('users', JSON.stringify(copiaUtentiSenzaCancellato));
+    sessionStorage.removeItem("sessionID")
+    console.log(copiaUtentiSenzaCancellato)
+    window.location.replace("index.html");
+
+})
+
+function settingPlaylist() {
+    document.getElementById('modifyProfile').style.display = "none";
+    document.getElementById('modifyAccount').style.display = "none";
+    document.getElementById('modifyPreference').style.display = "none";
+    document.getElementById('cancellaUtente').style.display = "none";
+    document.getElementById('divPlaylist').style.display = "block";
+}
+
+btnAddPreference = document.getElementById("btnAddPreference");
+
+btnAddPreference.addEventListener('click',() =>{
+    console.log("sono dentro ")
+    document.getElementById('SettingsAccount').style.display="none";
+    document.getElementById('container').style.display="block";
+    
+ 
+    /* document.getElementById('AccountSetting').style.display = "none";
+    document.getElementById('modifyProfile').style.display = "none";
+    document.getElementById('modifyAccount').style.display = "none";
+    document.getElementById('modifyPreference').style.display = "none";
+    document.getElementById('cancellaUtente').style.display = "none";
+    document.getElementById('divPlaylist').style.display = "none";
+    document.getElementById('container').style.display="block";  */
+});
+
+btnCreaPlaylist.addEventListener('click', () =>{
+    
+    //document.getElementById('SettingsAccount').style.display = "none";
+    //document.getElementById('CreaPlaylist').style.display = "block";
+     
+    document.getElementById('AccountSetting').style.display = "none";
+    document.getElementById('modifyProfile').style.display = "none";
+    document.getElementById('modifyAccount').style.display = "none";
+    document.getElementById('modifyPreference').style.display = "none";
+    document.getElementById('cancellaUtente').style.display = "none";
+    document.getElementById('divPlaylist').style.display = "none";
+    document.getElementById('CreaPlaylist').style.display = "block"; 
+})
+
+
+
+
+
+
+
+
+
+
+//PARTE 2 GESTIONE PLAYLIST
+
+/*
+createPlaylist = document.getElementById("createPlaylist");
+
+createPlaylist.addEventListener('click',()=>{
+    let playlist = {			// oggetto json registrazione 										
+		collaborative: "",
+		description: "",
+		images: [{
+            url : "",
+            height : 300,
+            width : 300
+        }],
+        name: string,
+	}
+
+
+});
+
+/*
+
+{
+    "collaborative": true,
+    "description": "string",
+    "images": [
+      {
+        "url": "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228\n",
+        "height": 300,
+        "width": 300
+      }
+    ],
+    "name": "string"
+  }*/

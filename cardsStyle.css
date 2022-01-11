@@ -228,3 +228,7 @@
     padding: 10px;
     text-align: center;
   }
+
+  .img-fluid{
+    border-radius: 50%;
+  }
