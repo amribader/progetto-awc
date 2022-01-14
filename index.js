@@ -26,6 +26,7 @@ document.getElementById('divPlaylist').style.display = "none";
 document.getElementById('CreaPlaylist').style.display = "none";
 
 
+
 let users = [];
 
 users = JSON.parse(window.localStorage.users); //stessa cosa di window.localStorage.getItem("users"); 
@@ -36,7 +37,7 @@ users = JSON.parse(window.localStorage.users); //stessa cosa di window.localStor
 
 const sessionID = window.sessionStorage.getItem("sessionID");
 
-//console.log(users)
+////console.log(users)
 
 if (!sessionID) { //se è undifined
     window.location.replace("index.html");
@@ -46,9 +47,9 @@ let utenteLoggato;
 
 function customizePage() {
 
-    //console.log(users)
+    ////console.log(users)
     //(JSON.parse(sessionStorage.getItem("sessionID"))) ? sessionID = (JSON.parse(sessionStorage.getItem("sessionID"))) : window.location.replace("login.html");
-    //console.log(sessionID);
+    ////console.log(sessionID);
 
 
     /*
@@ -56,16 +57,16 @@ function customizePage() {
      */
 
     const results = users.find(element => {
-        //console.log(element.sessionID);
+        ////console.log(element.sessionID);
         return element.sessionID === sessionID;
     });
 
-    //console.log(results)
+    ////console.log(results)
 
     utenteLoggato = results;
 
-    //console.log(utenteLoggato)
-    ////console.log(utenti.findIndex(results))
+    ////console.log(utenteLoggato)
+    //////console.log(utenti.findIndex(results))
 
     if (!results) { //SE NON TROVA UN UTENTE CON QUELLA STESSA SESISONE restituisce true se l'array è vuoto
         alert("dentro if")
@@ -74,12 +75,12 @@ function customizePage() {
 
     /*
 	
-        //console.log(sessionID)
-        //console.log(typeof sessionID)
+        ////console.log(sessionID)
+        ////console.log(typeof sessionID)
         const users = localStorage.getItem("users");
         div = document.getElementById("container_personal_info")
 	
-        ////console.log(div);
+        //////console.log(div);
     */
     const personal_info = document.getElementById("container_personal_info")
     personal_info.innerHTML += "<div><img src='' class='img-fluid' alt=''></div>";
@@ -111,7 +112,7 @@ function getToken() {
     })
         .then((response) => response.json())
         .then((tokenResponse) => {
-            //console.log(tokenResponse.access_token)
+            ////console.log(tokenResponse.access_token)
             window.localStorage.setItem("access_token", tokenResponse.access_token)
             //Sarebbe opportuno salvare il token nel local storage
         })
@@ -131,7 +132,7 @@ function getCategories() {
     })
         .then((response) => response.json())
         .then((results) => {
-            //console.log("album ", results)
+            ////console.log("album ", results)
             //.innerHTML= ;
             return showCategories(results);
         }
@@ -152,28 +153,29 @@ function showCategories(results) {
     /* for(i=0;i<results.items.length;i++){
         divCategories.innerHTML+= results.items[i].icons 
     } */
-    //console.log("resultCat", results.categories.items)
-    //console.log("resultCat", typeof results.categories.items)
+    ////console.log("resultCat", results.categories.items)
+    ////console.log("resultCat", typeof results.categories.items)
 
     results.categories.items.forEach(element => { // qui mostriamo le categorie tramite un for 
-        ////console.log(element)
+        //////console.log(element)
         cards.push(element)
         //div_categories.innerHTML+="<div id='categoryChild' class='row'></div>"
 
         //createCard(categoryChild, element)
         //div_categories.innerHTML+="<br>"
     });
+    //console.log(cards)
     createCardGrid(cards)
 }
 
 /* 
 function createCard(div, cat_elem) {//id del div,elem,
     categoryChild=document.getElementById(div)
-    //console.log(cat_elem)
-    //console.log(cat_elem.icons.url)
+    ////console.log(cat_elem)
+    ////console.log(cat_elem.icons.url)
 
     cat_elem.icons.forEach(element => {
-        //console.log(element.url)
+        ////console.log(element.url)
     });
 */
 // div.innerHTML += "<div class='col card'><img src='" + cat_elem.icons[0].url + "' width='" + cat_elem.icons.width + "'height='" + cat_elem.icons.height + "' class='card-img-top' alt='" + cat_elem.name + "'><div class='card-body box'><p class='card-text box_details'>" + cat_elem.name + "'</p></div></div>" */
@@ -202,15 +204,19 @@ function creaGriglia(cat_elem) {
 
 function createCardGrid(cat_elem) {
     let c = 0;
-    /*//console.log(cat_elem)
-    console.log(cat_elem[0])
-    console.log(cat_elem[0].id) */
+    //console.log(cat_elem)
+    //console.log(cat_elem[0])
+    //console.log(cat_elem[0].id)
+    //console.log(cat_elem[0].icons)
+    //console.log(cat_elem[0].icons[0].url)
+    //console.log(cat_elem[0].icons.url)
+    //console.log(typeof cat_elem[0].icons.url)
     div = document.getElementById("container");
     for (i = 0; i < 4; i++) { //righe
         for (j = 0; j < 5; j++) {
 
-            //console.log(cat_elem[c]);
-            console.log(c);
+            ////console.log(cat_elem[c]);
+            //console.log(c);
 
             div.innerHTML += "<label  class='card'><input name='chk' id='" + cat_elem[c].id + "' class='card__input' type='checkbox'/><div class='card__body'><div class='card__body-cover'><img class='card__body-cover-image' src='" + cat_elem[c].icons[0].url + "' width='" + cat_elem[c].icons[0].width + "'height='" + cat_elem[c].icons[0].height + " ' alt='" + cat_elem[c].name + "' /><span class='card__body-cover-checkbox'> <svg class='card__body-cover-checkbox--svg' viewBox='0 0 12 10'><polyline points='1.5 6 4.5 9 10.5 1'></polyline></svg></span></div><header class='card__body-header'><h2 class='card__body-header-title'>" + cat_elem[c].name + "</h2><p class='card__body-header-subtitle'>" + cat_elem[c].name + "</p></header></div>"
 
@@ -234,29 +240,29 @@ function salvaGeneri() {
 
 
     var element = document.getElementsByName('chk');
-    console.log(element);
+    //console.log(element);
     element.forEach(element => {
-        console.log(element);
+        //console.log(element);
 
         if (element.checked) {
             cardId = document.getElementById(element.id)
-            console.log(cardId);
-            console.log(element.id);
+            //console.log(cardId);
+            //console.log(element.id);
             cards.forEach(elem => {
                 if (elem.id == element.id) {
-                    console.log(elem)
+                    //console.log(elem)
                     userCard.push(elem);
                 }
             });
         }
     });
 
-    console.log(cards);
+    //console.log(cards);
 
-    console.log(userCard);
-    console.log(utenteLoggato);
-    console.log(users.indexOf(utenteLoggato));
-    console.log(users[users.indexOf(utenteLoggato)]);
+    //console.log(userCard);
+    //console.log(utenteLoggato);
+    //console.log(users.indexOf(utenteLoggato));
+    //console.log(users[users.indexOf(utenteLoggato)]);
 
     // Add new data to localStorage Array
     users[users.indexOf(utenteLoggato)]['favoriteCategories'] = userCard;
@@ -289,15 +295,15 @@ form.addEventListener('submit', logSubmit);
 
 
 function logSubmit(event) {
-    console.log(event);
+    //console.log(event);
     let elem = document.querySelectorAll(".form-check-input");
 
     elem.forEach(element => {
         if (element.checked) {
-            console.log(element)
-            console.log(element.value)//value email
-            console.log(document.getElementById(element.value))
-            console.log(document.getElementById(element.value).value)//mail associata al campo
+            //console.log(element)
+            //console.log(element.value)//value email
+            //console.log(document.getElementById(element.value))
+            //console.log(document.getElementById(element.value).value)//mail associata al campo
 
             change(element)
 
@@ -312,13 +318,13 @@ function logSubmit(event) {
 
 function change(element) {
     let c = element.value;
-    console.log(typeof element.value)
-    console.log(c)
-    console.log(typeof c)
-    console.log(users[users.indexOf(utenteLoggato)])
-    console.log(users[users.indexOf(utenteLoggato)][c])
-    //console.log(users[users.indexOf(utenteLoggato)].element.value)
-    console.log(document.getElementById(element.value).value)
+    //console.log(typeof element.value)
+    //console.log(c)
+    //console.log(typeof c)
+    //console.log(users[users.indexOf(utenteLoggato)])
+    //console.log(users[users.indexOf(utenteLoggato)][c])
+    ////console.log(users[users.indexOf(utenteLoggato)].element.value)
+    //console.log(document.getElementById(element.value).value)
     //const Account = {username:"Fiat", mail:"500", password:"white"};
     users[users.indexOf(utenteLoggato)][c] = document.getElementById(element.value).value
     //users[users.indexOf(utenteLoggato)]['favoriteCategories'] = userCard;
@@ -340,7 +346,7 @@ function settings() {
    const password = document.getElementById("password");
    const password_conferma = document.getElementById("password_conferma");
 
-   console.log(elem);
+   //console.log(elem);
 
    
 
@@ -366,7 +372,7 @@ checkboxes.forEach(function(checkbox) {
       .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
       .map(i => i) // Use Array.map to extract only the checkbox values from the array of objects.
       
-    console.log(enabledSettings)
+    //console.log(enabledSettings)
   })
 }); 
 */
@@ -401,8 +407,8 @@ cambiaNome.addEventListener('click', () => {
     if (document.getElementById('profileName').value == "") {
         return
     }
-    console.log(utenteLoggato.nome);
-    console.log(typeof nome)
+    //console.log(utenteLoggato.nome);
+    //console.log(typeof nome)
     //utenteLoggato.nome = document.getElementById('profileName').value;
     users[users.indexOf(utenteLoggato)].nome = document.getElementById('profileName').value
 
@@ -419,7 +425,7 @@ cambiaBio.addEventListener('click', () => {
 })
 
 cambiaImg.addEventListener('click', () => {
-    console.log(document.getElementById('formFile'))
+    //console.log(document.getElementById('formFile'))
     formFile.style.display = "none";
     immagineProfilo1.innerHTML += "<img src='https://www.italiamaresrl.it/images/header/001_2.jpg' width='10px'>";//voglio creare un array qui in javascript con link a delle immagini 
     //e quando clicca sul bottone cambia immagine gliene genero una a caso prendendola dall'array
@@ -443,7 +449,7 @@ function settingAccount() {
 //localStorage.setItem('users', JSON.stringify(users));
 
 function settingPreference() {
-    console.log("sono dentro settingPreference")
+    //console.log("sono dentro settingPreference")
     divPlaylist.style.display = "none";
     document.getElementById('cancellaUtente').style.display = "none";
     document.getElementById('modifyProfile').style.display = "none";
@@ -454,10 +460,10 @@ function settingPreference() {
     const table = document.getElementById('tablePreference');
 
     let pref = users[users.indexOf(utenteLoggato)]["favoriteCategories"];
-    console.log(pref)
+    //console.log(pref)
     table.innerHTML = "";
     pref.forEach(element => {
-        console.log(element)
+        //console.log(element)
         table.innerHTML += "<tr><td>" + element.name + "</td><td><button id='btn" + element.id + "' onclick='settingPreferenceID(this)' type='button' class='btn btn-danger'>X</button></td></tr>"
     });
 
@@ -475,25 +481,25 @@ function settingPreference() {
 Qundo viene cliccato un bottono rosso, allora scateno l'evetno per rimuovere quella 
 */
 
-function settingPreferenceID(sorgente){
-    console.log(sorgente);
+function settingPreferenceID(sorgente) {
+    //console.log(sorgente);
     let preference = users[users.indexOf(utenteLoggato)]['favoriteCategories']
-    console.log((sorgente.id).slice(-((sorgente.id).length-3)))
-    const result = preference.filter(element => element.id == (sorgente.id).slice(-((sorgente.id).length-3))) 
+    //console.log((sorgente.id).slice(-((sorgente.id).length - 3)))
+    const result = preference.filter(element => element.id == (sorgente.id).slice(-((sorgente.id).length - 3)))
 
-    console.log(preference)
+    //console.log(preference)
 
     result.forEach(element => {
-        console.log(element);
-        console.log(preference.indexOf(element));
-        preference.splice(preference.indexOf(element),1);
+        //console.log(element);
+        //console.log(preference.indexOf(element));
+        preference.splice(preference.indexOf(element), 1);
     });
 
     users[users.indexOf(utenteLoggato)]['favoriteCategories'] = preference;
 
     localStorage.setItem('users', JSON.stringify(users));
-    
-    console.log(users);
+
+    //console.log(users);
     const table = document.getElementById('tablePreference');
     //table.innerHTML = "<tr><td>NON SONO PRESENTI PREFERENZE</td></tr>"
     settingPreference();
@@ -506,14 +512,14 @@ const settingPreferenceID = document.getElementById("settingPreferenceID");
 settingPreferenceID.addEventListener('click', () => {
 
     const redbtn = document.querySelectorAll(".btn-danger");
-    console.log(redbtn);
+    //console.log(redbtn);
 
 
     redbtn.forEach(element => {
-        console.log(element)
+        //console.log(element)
         element.addEventListener('click', (this) => {
-            console.log(element)
-            console.log(this)
+            //console.log(element)
+            //console.log(this)
         })
     });
 
@@ -537,7 +543,7 @@ checkboxes.forEach(function(checkbox) {
       .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.
       .map(i => i) // Use Array.map to extract only the checkbox values from the array of objects.
       
-    console.log(enabledSettings)
+    //console.log(enabledSettings)
   })
 }); 
 */
@@ -553,7 +559,7 @@ function deleteUser() {
 
 bottoneCancellaUtente.addEventListener('click', () => {
     copiaUtentiSenzaCancellato = users
-    console.log(users)
+    //console.log(users)
     /*  for(i=0;i<users.length;i++){
          if users[i]==utenteLoggato{
              
@@ -562,7 +568,7 @@ bottoneCancellaUtente.addEventListener('click', () => {
     copiaUtentiSenzaCancellato.splice(users.indexOf(utenteLoggato), 1)
     localStorage.setItem('users', JSON.stringify(copiaUtentiSenzaCancellato));
     sessionStorage.removeItem("sessionID")
-    console.log(copiaUtentiSenzaCancellato)
+    //console.log(copiaUtentiSenzaCancellato)
     window.location.replace("index.html");
 
 })
@@ -572,17 +578,18 @@ function settingPlaylist() {
     document.getElementById('modifyAccount').style.display = "none";
     document.getElementById('modifyPreference').style.display = "none";
     document.getElementById('cancellaUtente').style.display = "none";
-    document.getElementById('divPlaylist').style.display = "block";
+    document.getElementById('CreaPlaylist').style.display = "block";
+
 }
 
 btnAddPreference = document.getElementById("btnAddPreference");
 
-btnAddPreference.addEventListener('click',() =>{
-    console.log("sono dentro ")
-    document.getElementById('SettingsAccount').style.display="none";
-    document.getElementById('container').style.display="block";
-    
- 
+btnAddPreference.addEventListener('click', () => {
+    //console.log("sono dentro ")
+    document.getElementById('SettingsAccount').style.display = "none";
+    document.getElementById('container').style.display = "block";
+
+
     /* document.getElementById('AccountSetting').style.display = "none";
     document.getElementById('modifyProfile').style.display = "none";
     document.getElementById('modifyAccount').style.display = "none";
@@ -592,18 +599,18 @@ btnAddPreference.addEventListener('click',() =>{
     document.getElementById('container').style.display="block";  */
 });
 
-btnCreaPlaylist.addEventListener('click', () =>{
-    
+liNewPlaylist.addEventListener('click', () => {
+
     //document.getElementById('SettingsAccount').style.display = "none";
     //document.getElementById('CreaPlaylist').style.display = "block";
-     
-    document.getElementById('AccountSetting').style.display = "none";
+
+    document.getElementById('AccountSetting').style.display = "block";
     document.getElementById('modifyProfile').style.display = "none";
     document.getElementById('modifyAccount').style.display = "none";
     document.getElementById('modifyPreference').style.display = "none";
     document.getElementById('cancellaUtente').style.display = "none";
-    document.getElementById('divPlaylist').style.display = "none";
-    document.getElementById('CreaPlaylist').style.display = "block"; 
+    document.getElementById('divPlaylist').style.display = "block";
+    document.getElementById('CreaPlaylist').style.display = "block";
 })
 
 
@@ -617,24 +624,221 @@ btnCreaPlaylist.addEventListener('click', () =>{
 
 //PARTE 2 GESTIONE PLAYLIST
 
-/*
-createPlaylist = document.getElementById("createPlaylist");
 
-createPlaylist.addEventListener('click',()=>{
+const createPlaylist = document.getElementById("createPlaylist");
+
+createPlaylist.addEventListener('submit',()=>{
+    console.log("on submit")
+    event.preventDefault();
+    let playlists;
+    const collaborative = document.getElementById("collaborative")
+    const playlistdescription = document.getElementById("playlistDescription")
+    const playlistName = document.getElementById("playlistName")
+    console.log(collaborative)
+    console.log(playlistdescription)
+    console.log(playlistName)
+    //const collaborative = document.getElementById("playlistImage")//per ora no
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] ? playlists = users[users.indexOf(utenteLoggato)]['Playlists'] : playlists = [];
+
     let playlist = {			// oggetto json registrazione 										
-		collaborative: "",
-		description: "",
-		images: [{
+        collaborative: collaborative.value,
+        description: playlistdescription.value,
+        images: [{
             url : "",
             height : 300,
             width : 300
         }],
-        name: string,
-	}
+        name: playlistName.value,
+        tracks :  tracks
+    }
 
+    console.log(tracks)
+    console.log(playlist)
 
+    playlists.push(playlist);
+
+    console.log(playlists)
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] = playlists
+    localStorage.setItem('users', JSON.stringify(users));
+    
 });
 
+const searchTrack = document.getElementById("searchTrack")
+var resultsTracks;
+
+
+searchTrack.addEventListener('keyup', () => {
+    //console.log("keyup")
+    const url = "https://api.spotify.com/v1/search?type=album,artist,playlist,track,show,episode&q=" + searchTrack.value;
+    getTrack(url);
+})
+
+
+function getTrack(url) {
+
+    const access_token = localStorage.access_token;
+
+    async function fetchTrack() {
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + access_token,
+            },
+        })
+        const tracks = await response.json();
+        return tracks;
+    }
+    fetchTrack().then((results) => {
+        //console.log(results)
+        createTrackDetail(results.tracks.items)
+        resultsTracks = results.tracks.items
+        btnAddTrackPlaylist();
+    });
+}
+
+/*
+function getTrack(url) {
+
+    const access_token = localStorage.access_token;
+
+
+    fetch(url, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + access_token,
+        },
+    })
+        .then((response) => response.json())
+        .then((results) => {
+            //console.log(results)
+            createTrackDetail(results.tracks.items)
+        });
+
+        
+}
+*/
+
+function createTrackDetail(results) {
+
+    trackList = document.getElementById("trackList");
+    trackList.innerHTML = '';
+
+    //console.log(results)
+    //console.log(results.tracks)
+    //console.log(typeof results)
+
+    results.forEach(element => {
+        trackList.innerHTML += "<br><div class='row trackBorder' id='rowItem" + element.id + "' ></div>"
+        //console.log(element)
+        //console.log(element.id)
+        const img = element.album.images[2].url;
+
+        //console.log(img)
+
+        const title = element.name;
+        const albumName = element.album.name
+        const artist = element.artists[0].name;
+
+
+
+        const html =
+            `
+    <div class="col-1">
+        <img src="${img}" height="${element.album.images[2].height}" width="${element.album.images[2].width}" alt="">        
+    </div>
+    <div class="col-4">
+        <label for="Genre" class="form-label col-sm-12"><strong>${title}</strong></label>
+        <label for="artist" class="form-label col-sm-12"><strong>${artist}</strong></label>
+    </div>
+    <div class="col-5">
+    <label for="artist" class="form-label col-sm-12"><strong>${albumName}</strong></label>
+    </div> 
+    <div class="col-2">
+    <button type="button" id='${element.id}' class="btn btn-dark">AGGIUNGI</button>
+    </div> 
+    
+    `;
+    /*
+    const html = 
+    `
+    <div class="col-1">
+        <img src="${img}" height="${element.album.images[2].height}" width="${element.album.images[2].width}" alt="">        
+    </div>
+    <div class="col-3">
+        <label for="Genre" class="form-label col-sm-12">${title}:</label>
+        
+    </div>
+     <div class="col-3">
+        <label for="artist" class="form-label col-sm-12">By ${artist}:</label>
+    </div>  
+
+    <div class="col-3">
+    <button type="button" class="btn btn-dark">Dark</button>
+    </div> 
+    
+    `;*/
+        const rowItem = document.getElementById("rowItem" + element.id)
+        //console.log(rowItem)
+        rowItem.insertAdjacentHTML('beforeend', html)
+
+    });
+
+}
+
+var tracks = [];
+
+function btnAddTrackPlaylist() {
+    console.log("sono dentro ")
+    const btnAddItem = document.querySelectorAll(".btn-dark")
+    console.log(btnAddItem)
+    console.log(resultsTracks)
+
+    btnAddItem.forEach(element => {
+        element.addEventListener('click', () => {
+            console.log(this);
+            console.log(element);
+
+            const found = resultsTracks.find(elem => elem.id == element.id);
+
+            console.log(found)
+
+            if (!found) { //SE NON TROVA UN UTENTE CON QUELLA STESSA SESISONE restituisce true se l'array è vuoto
+                console.log("non lo trovato")
+                return;
+            }
+            
+            //AGGIUNGO LA TRACK ALL'ARRAY PLAYLIST
+            tracks.push(found);
+        });
+    });
+}
+
+
+/*
+createTrackDetail(img, title, artist) {
+
+    const detailDiv = document.querySelector(DOMElements.divSongDetail);
+    // any time user clicks a new song, we need to clear out the song detail div
+    detailDiv.innerHTML = '';
+
+    const html = 
+    `
+    <div class="row col-sm-12 px-0">
+        <img src="${img}" alt="">        
+    </div>
+    <div class="row col-sm-12 px-0">
+        <label for="Genre" class="form-label col-sm-12">${title}:</label>
+    </div>
+    <div class="row col-sm-12 px-0">
+        <label for="artist" class="form-label col-sm-12">By ${artist}:</label>
+    </div> 
+    `;
+
+    detailDiv.insertAdjacentHTML('beforeend', html)
+}
+*/
 /*
 
 {
@@ -649,3 +853,45 @@ createPlaylist.addEventListener('click',()=>{
     ],
     "name": "string"
   }*/
+
+
+
+/* var films = []             HO INCOLLATO LA PARTE DELLA RICERCA
+     
+//document.addEventListener('keyup', ricercaFilm);
+
+
+
+function ricercaFilm() {
+    var cerca = document.getElementById('cerca');
+    term = cerca.value;
+    var t = document.getElementById("tabella");
+    t.innerHTML = ""
+
+    films
+    .filter(film => film.title.toLowerCase().includes(term.toLowerCase()))
+    .forEach( film => {
+        t.innerHTML = t.innerHTML + "<tr><td>" + film.title + "</td></tr>"
+    })
+}
+
+fetch('https://swapi.dev/api/films/')
+    .then(
+        function (response) {
+            if (response.status !== 200) {
+                //console.log('Looks like there was a problem. Status Code: ' +
+                    response.status);
+                return;
+            }
+
+            response.json().then(function (data) {
+                films = data.results
+                ricercaFilm("")
+            });
+        }
+    )
+    .catch(function (err) {
+        //console.log('Fetch Error :-S', err);
+    });
+    
+*/

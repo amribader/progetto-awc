@@ -126,8 +126,17 @@
                             id="account" name="account" onclick="settingAccount()">Account (FATTO)</button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
                             onclick="settingPreference()">Preferenze</button>
-                        <button type="button" class="btn btn-success list-group-item list-group-item-action"
-                            onclick="settingPlaylist()">Playlist</button>
+                        <div class="dropdown">
+                            
+                        <button type="button" id="btnPlaylist" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-success list-group-item list-group-item-action dropdown-toggle"
+                        onclick="settingPlaylist()">Playlist</button>
+                        <ul class="dropdown-menu" aria-labelledby="btnPlaylist">
+                            <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick="">Nuova playlist</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                          </ul>
+                        </div>
+
                         <button type="button" class="btn btn-success list-group-item list-group-item-action">Comunità
                             condivisioni</button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action">A second
@@ -337,7 +346,7 @@
                 <!-- INIZIO DIV MOSTRA PLAYLIST -->
                 <div class="col-sm-10" id="divPlaylist">
                     <div class="container">
-                        <div class="row cant d-flex justify-content-center align-items-center">
+                      <!--   <div class="row cant d-flex justify-content-center align-items-center">
                             <div class="col-md-6">
                                 <div class="p-3 card">
                                     <div class="d-flex justify-content-between align-items-center p-3 music">
@@ -372,8 +381,48 @@
                                         playlist</button>
                                 </div>
                             </div>
-                        </div>
+     
+                        </div> -->
+                                                          
+        <!-- INIZIO DIV CREA PLAYLIST -->
+        <div class="container-fluid" id="CreaPlaylist">
+            <form action="" id="createPlaylist">
+                <div class="mb-3">
+                  <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
+                  <input type="text" class="form-control" id="playlistName" value="" >
+                </div>
+                <div class="mb-3">
+                  <label for="playlistDescription" class="form-label"><strong>Descrizione Playlist</strong></label>
+                  <input type="text" class="form-control" id="playlistDescription" value="">
+                </div>
+                <div class="mb-3">
+                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
+                    <input type="text" class="form-control" id="tagPlaylist">
+                  </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="collaborative">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist pubblica</strong></label>
+                  </div>
+                  <br>
+                  <div class="mb-3" id="divSearchTrack">
+                    <label for="searchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
+                    <input type="text" class="form-control" id="searchTrack"> 
+                  </div>
+                <button type="submit" class="btn btn-primary" >Salva</button> 
+                <br>
+                <br>
+
+                <!-- div mostra truck della ricerca -->
+                <div id="trackList" class="container" >
+            
+                </div>
+                <!-- fine  div mostra truck della ricerca -->
+
+              </form>
+        </div>
+        <!-- FINE DIV CREA PLAYLIST -->
                     </div>
+         
                     <!-- <h1 style="color: red"> Playlist</h1> -->
                 </div>
                 <!-- FINE DIV  MOSTRA PLAYLIST -->
@@ -389,30 +438,6 @@
 
         </div>
 
-        <!-- INIZIO DIV CREA PLAYLIST -->
-        <div class="container-fluid" id="CreaPlaylist" style="background-color:powderblue;">
-            <form>
-                <div class="mb-3">
-                  <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
-                  <input type="text" class="form-control" id="playlistName" >
-                </div>
-                <div class="mb-3">
-                  <label for="playlistDescription" class="form-label"><strong>Descrizione Playlist</strong></label>
-                  <input type="text" class="form-control" id="playlistDescription">
-                </div>
-                <div class="mb-3">
-                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
-                    <input type="text" class="form-control" id="tagPlaylist">
-                  </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="checkPlaylistPubblica">
-                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist pubblica</strong></label>
-                  </div>
-                  <br>
-                <button type="submit" class="btn btn-primary">Submit</button>
-              </form>
-        </div>
-        <!-- FINE DIV CREA PLAYLIST -->
 
     </div>
     <!-- 

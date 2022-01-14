@@ -219,7 +219,7 @@
   }
 
   .form-control{
-    width: 100px;
+    width: 500px;
   }
 
   .center{
@@ -232,3 +232,9 @@
   .img-fluid{
     border-radius: 50%;
   }
+
+ .trackBorder:hover {
+   padding: 10px;
+   background-color: #5cb85c;
+   color: white;
+ }
