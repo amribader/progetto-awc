@@ -485,10 +485,11 @@ function settingPreferenceID(sorgente) {
     //console.log(sorgente);
     let preference = users[users.indexOf(utenteLoggato)]['favoriteCategories']
     //console.log((sorgente.id).slice(-((sorgente.id).length - 3)))
-    const result = preference.filter(element => element.id == (sorgente.id).slice(-((sorgente.id).length - 3)))
+    const result = preference.filter(element => element.id == (sorgente.id).slice(-((sorgente.id).length - 3)))  //il -3 toglie la parte con "btn"
 
     //console.log(preference)
 
+    // result è un array che contiene gli elementi da eliminare 
     result.forEach(element => {
         //console.log(element);
         //console.log(preference.indexOf(element));
@@ -578,7 +579,9 @@ function settingPlaylist() {
     document.getElementById('modifyAccount').style.display = "none";
     document.getElementById('modifyPreference').style.display = "none";
     document.getElementById('cancellaUtente').style.display = "none";
-    document.getElementById('CreaPlaylist').style.display = "block";
+    document.getElementById('CreaPlaylist').style.display = "none";
+    document.getElementById('MyPlaylist').style.display = "none";
+    document.getElementById('divPlaylist').style.display = "block";
 
 }
 
@@ -608,8 +611,9 @@ liNewPlaylist.addEventListener('click', () => {
     document.getElementById('modifyProfile').style.display = "none";
     document.getElementById('modifyAccount').style.display = "none";
     document.getElementById('modifyPreference').style.display = "none";
+    document.getElementById('MyPlaylist').style.display = "none";
     document.getElementById('cancellaUtente').style.display = "none";
-    document.getElementById('divPlaylist').style.display = "block";
+    //document.getElementById('divPlaylist').style.display = "block";
     document.getElementById('CreaPlaylist').style.display = "block";
 })
 
@@ -627,7 +631,7 @@ liNewPlaylist.addEventListener('click', () => {
 
 const createPlaylist = document.getElementById("createPlaylist");
 
-createPlaylist.addEventListener('submit',()=>{
+createPlaylist.addEventListener('submit', () => {
     console.log("on submit")
     event.preventDefault();
     let playlists;
@@ -642,15 +646,15 @@ createPlaylist.addEventListener('submit',()=>{
     users[users.indexOf(utenteLoggato)]['Playlists'] ? playlists = users[users.indexOf(utenteLoggato)]['Playlists'] : playlists = [];
 
     let playlist = {			// oggetto json registrazione 										
-        collaborative: collaborative.value,
+        collaborative: collaborative.checked,
         description: playlistdescription.value,
         images: [{
-            url : "",
-            height : 300,
-            width : 300
+            url: "",
+            height: 300,
+            width: 300
         }],
         name: playlistName.value,
-        tracks :  tracks
+        tracks: tracks
     }
 
     console.log(tracks)
@@ -662,7 +666,10 @@ createPlaylist.addEventListener('submit',()=>{
 
     users[users.indexOf(utenteLoggato)]['Playlists'] = playlists
     localStorage.setItem('users', JSON.stringify(users));
-    
+
+
+    tracks = [];
+
 });
 
 const searchTrack = document.getElementById("searchTrack")
@@ -760,25 +767,25 @@ function createTrackDetail(results) {
     </div> 
     
     `;
-    /*
-    const html = 
-    `
-    <div class="col-1">
-        <img src="${img}" height="${element.album.images[2].height}" width="${element.album.images[2].width}" alt="">        
-    </div>
-    <div class="col-3">
-        <label for="Genre" class="form-label col-sm-12">${title}:</label>
-        
-    </div>
-     <div class="col-3">
-        <label for="artist" class="form-label col-sm-12">By ${artist}:</label>
-    </div>  
-
-    <div class="col-3">
-    <button type="button" class="btn btn-dark">Dark</button>
-    </div> 
+        /*
+        const html = 
+        `
+        <div class="col-1">
+            <img src="${img}" height="${element.album.images[2].height}" width="${element.album.images[2].width}" alt="">        
+        </div>
+        <div class="col-3">
+            <label for="Genre" class="form-label col-sm-12">${title}:</label>
+            
+        </div>
+         <div class="col-3">
+            <label for="artist" class="form-label col-sm-12">By ${artist}:</label>
+        </div>  
     
-    `;*/
+        <div class="col-3">
+        <button type="button" class="btn btn-dark">Dark</button>
+        </div> 
+        
+        `;*/
         const rowItem = document.getElementById("rowItem" + element.id)
         //console.log(rowItem)
         rowItem.insertAdjacentHTML('beforeend', html)
@@ -808,7 +815,7 @@ function btnAddTrackPlaylist() {
                 console.log("non lo trovato")
                 return;
             }
-            
+
             //AGGIUNGO LA TRACK ALL'ARRAY PLAYLIST
             tracks.push(found);
         });
@@ -895,3 +902,63 @@ fetch('https://swapi.dev/api/films/')
     });
     
 */
+
+function LogOut() {      //logout utente, lo rimando alla prima pagina
+    window.location.replace("index.html");
+}
+
+
+
+
+
+//------------------------------------------------------//
+//FUNZIONE CHE SU LE MIE PLAYLIST MOSTRA UN DIV CHELE MIE PLAYLIST
+
+document.getElementById("liMyPlaylist").addEventListener('click', () => {
+    document.getElementById('CreaPlaylist').style.display = "none";
+    document.getElementById('MyPlaylist').style.display = "block";
+});
+
+//FUNZIONA CHE MOSTRA L'ELENCO DELLE PLAYLIST PRESENTI
+
+const tableMyPlaylist = document.getElementById("tableMyPlaylist");
+
+liMyPlaylist.addEventListener('click', () => {
+
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] ? MyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'] : MyPlaylist = [];//MyPlaylistIsEmpty();
+
+    if (!MyPlaylist.length) {
+        tableMyPlaylist.innerHTML = "<tr><td></td><td><strong>NON SONO PRESENTI PLAYLIST</strong></td><td></td><td></td></tr>"
+        return;
+    }
+
+
+    //console.log(pref)
+    tableMyPlaylist.innerHTML = "";
+
+    MyPlaylist.forEach(element => {
+        if (element.collaborative) {
+            isPublic = "PUBBLICO"
+        } else {
+            isPublic = "PRIVATA"
+        }
+        /* console.log(element.tracks[0].id)
+        console.log(element.tracks)
+        console.log(element.tracks[0]) */
+        tableMyPlaylist.innerHTML += "<tr><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
+    });
+
+});
+
+//NON VIENE UTILIZZATA
+function MyPlaylistIsEmpty() {
+
+    console.log("non sono presenti playlist")
+    tableMyPlaylist.innerHTML = "<tr><td>NON SONO PRESENTI PLAYLIST</td></tr>"
+    return;
+}
+
+function deletePlaylist() {  //elimina la playlist corrispondente
+
+}

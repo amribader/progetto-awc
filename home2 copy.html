@@ -63,7 +63,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="#" id="logout" onclick="LogOut()">Log Out</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -132,7 +132,7 @@
                         onclick="settingPlaylist()">Playlist</button>
                         <ul class="dropdown-menu" aria-labelledby="btnPlaylist">
                             <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick="">Nuova playlist</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" id="liMyPlaylist" href="#">Le tue playlist</a></li>
                             <li><a class="dropdown-item" href="#">Something else here</a></li>
                           </ul>
                         </div>
@@ -421,6 +421,30 @@
               </form>
         </div>
         <!-- FINE DIV CREA PLAYLIST -->
+        <!-- INIZIO DIV MOSTRA MY PLAYLIST -->
+        <div class="container-fluid" id="MyPlaylist">
+            <div class="container-sm">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr class="table">
+                            <th class="th-sm" scope="col"><strong>Name</strong></th>
+                            <th class="th-sm" scope="col"><strong>Description</strong></th>
+                            <th class="th-sm" scope="col"><strong>Collaborative</strong></th>
+                            <th class="th-sm" scope="col"><strong>Delete</strong></th>
+                            <th class="th-sm" scope="col"><strong>Modify</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableMyPlaylist">
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- FINE DIV MOSTRA MY PLAYLIST -->
+
+
+        
                     </div>
          
                     <!-- <h1 style="color: red"> Playlist</h1> -->
