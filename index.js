@@ -638,6 +638,7 @@ createPlaylist.addEventListener('submit', () => {
     const collaborative = document.getElementById("collaborative")
     const playlistdescription = document.getElementById("playlistDescription")
     const playlistName = document.getElementById("playlistName")
+    const tagPlaylist = document.getElementById("tagPlaylist")
     console.log(collaborative)
     console.log(playlistdescription)
     console.log(playlistName)
@@ -654,6 +655,7 @@ createPlaylist.addEventListener('submit', () => {
             width: 300
         }],
         name: playlistName.value,
+        tag : tagPlaylist,
         tracks: tracks
     }
 
@@ -922,9 +924,11 @@ document.getElementById("liMyPlaylist").addEventListener('click', () => {
 //FUNZIONA CHE MOSTRA L'ELENCO DELLE PLAYLIST PRESENTI
 
 const tableMyPlaylist = document.getElementById("tableMyPlaylist");
+const liMyPlaylist = document.getElementById("liMyPlaylist");
+liMyPlaylist.addEventListener('click', fillTableMyPL);
 
-liMyPlaylist.addEventListener('click', () => {
-
+function fillTableMyPL() {
+    console.log("click su le tue playlist")
 
     users[users.indexOf(utenteLoggato)]['Playlists'] ? MyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'] : MyPlaylist = [];//MyPlaylistIsEmpty();
 
@@ -939,17 +943,56 @@ liMyPlaylist.addEventListener('click', () => {
 
     MyPlaylist.forEach(element => {
         if (element.collaborative) {
-            isPublic = "PUBBLICO"
+            isPublic = "PUBBLICO";
         } else {
-            isPublic = "PRIVATA"
+            isPublic = "PRIVATA";
         }
         /* console.log(element.tracks[0].id)
         console.log(element.tracks)
         console.log(element.tracks[0]) */
-        tableMyPlaylist.innerHTML += "<tr><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
-    });
+        //tableMyPlaylist.innerHTML += "<tr class='accordion-toggle collapsed' id='accordion1' data-toggle='collapse' data-parent='#accordion1' href='#collapseOne'><td class='expand-button' ></td><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button onclick='deletePlaylist(this)' id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
+        tableMyPlaylist.innerHTML += "<tr data-bs-toggle='collapse' href='#collapseExample"+element.tracks[0].id+"' role='button' aria-expanded='false' aria-controls='collapseExample' ><td></td><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button onclick='deletePlaylist(this)' id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
+
+        //tableMyPlaylist.innerHTML += "<tr class='hide-table-padding'><td></td><td colspan='3'><div id='collapseOne' class='collapse in p-3'><div class='row'>CIAOOOO</div></div></td></tr>"
+        //tableMyPlaylist.innerHTML += "<tr><td class='hiddenRow'><div id='demo3' class='accordian-body collapse'>Demo3 sadasdasdasdasdas</div></td></tr>"
+        tableMyPlaylist.innerHTML += "<tr class='collapse' id='collapseExample"+element.tracks[0].id+"'><td colspan='6' ><div id='ModifyPL'>  <div></td></tr>"
+
+        const ModifyPL = document.getElementById("ModifyPL");
+
+        const html = 
+        `
+        <div class="container-fluid">
+            <form action="" >
+                <div class="mb-3">
+                  <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
+                  <input type="text" class="form-control" value="${element.name}" >
+                </div>
+                <div class="mb-3">
+                  <label for="playlistDescription" class="form-label"><strong>Descrizione Playlist</strong></label>
+                  <input type="text" class="form-control" value="${element.description}">
+                </div>
+                <div class="mb-3">
+                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
+                    <input type="text" class="form-control" value="${element.tag}">
+                  </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch">
+                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist pubblica</strong></label>
+                </div>
+                <button type="submit" class="btn btn-primary" >Salva</button> 
+
+            </form>
+        </div>
+        
+        `;
+
+        //console.log(rowItem)
+        ModifyPL.insertAdjacentHTML('afterbegin', html)
+
 
 });
+
+};
 
 //NON VIENE UTILIZZATA
 function MyPlaylistIsEmpty() {
@@ -959,6 +1002,27 @@ function MyPlaylistIsEmpty() {
     return;
 }
 
-function deletePlaylist() {  //elimina la playlist corrispondente
+function deletePlaylist(sorgente) {
+    console.log(sorgente);
+    let preference = users[users.indexOf(utenteLoggato)]['Playlists']
+    console.log(sorgente.id)
+    console.log((sorgente.id).slice(-((sorgente.id).length - 13)))
+    const result = preference.filter(element => element.tracks[0].id == (sorgente.id).slice(-((sorgente.id).length - 13)))  //il -13 toglie la parte con "btn"
+
+    //console.log(preference)
+
+    // result è un array che contiene gli elementi da eliminare 
+    result.forEach(element => {
+        //console.log(element);
+        //console.log(preference.indexOf(element));
+        preference.splice(preference.indexOf(element), 1);
+    });
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] = preference;
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+
+    fillTableMyPL();
 
 }
