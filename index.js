@@ -46,7 +46,7 @@ if (!sessionID) { //se è undifined
 let utenteLoggato;
 
 function customizePage() {
-
+    console.log("customized")
     ////console.log(users)
     //(JSON.parse(sessionStorage.getItem("sessionID"))) ? sessionID = (JSON.parse(sessionStorage.getItem("sessionID"))) : window.location.replace("login.html");
     ////console.log(sessionID);
@@ -90,7 +90,7 @@ function customizePage() {
 
 }
 
-customizePage();
+//customizePage();
 /*
 Una volta ottenuti i Client ID e Client Secret andranno inseriti nel codice javascript e utilizzati per ottenere
 un token di accesso. l'access token è necessario per interagire con le API.
@@ -469,7 +469,7 @@ function settingPreference() {
 
     /*
         <tr>
-        <th scope="row">3</th>
+        <t row">h scope="row3</th>
         <td colspan="2">Larry the Bird</td>
         <td>@twitter</td>
       </tr>
@@ -655,7 +655,7 @@ createPlaylist.addEventListener('submit', () => {
             width: 300
         }],
         name: playlistName.value,
-        tag : tagPlaylist,
+        tag: tagPlaylist.value,
         tracks: tracks
     }
 
@@ -675,17 +675,21 @@ createPlaylist.addEventListener('submit', () => {
 });
 
 const searchTrack = document.getElementById("searchTrack")
+
 var resultsTracks;
 
 
-searchTrack.addEventListener('keyup', () => {
-    //console.log("keyup")
+searchTrack.addEventListener('keyup', searchTrackSpotify)
+
+
+function searchTrackSpotify() {
+    console.log("keyup")
     const url = "https://api.spotify.com/v1/search?type=album,artist,playlist,track,show,episode&q=" + searchTrack.value;
-    getTrack(url);
-})
+    getTrack(url, "trackList");
+}
 
 
-function getTrack(url) {
+function getTrack(url, div) {
 
     const access_token = localStorage.access_token;
 
@@ -701,7 +705,7 @@ function getTrack(url) {
     }
     fetchTrack().then((results) => {
         //console.log(results)
-        createTrackDetail(results.tracks.items)
+        createTrackDetail(results.tracks.items, div)
         resultsTracks = results.tracks.items
         btnAddTrackPlaylist();
     });
@@ -729,9 +733,9 @@ function getTrack(url) {
 }
 */
 
-function createTrackDetail(results) {
+function createTrackDetail(results, div) {
 
-    trackList = document.getElementById("trackList");
+    trackList = document.getElementById(div);
     trackList.innerHTML = '';
 
     //console.log(results)
@@ -798,7 +802,7 @@ function createTrackDetail(results) {
 
 var tracks = [];
 
-function btnAddTrackPlaylist() {
+function btnAddTrackPlaylist() {          // pulsante nero per aggiungere le canzoni 
     console.log("sono dentro ")
     const btnAddItem = document.querySelectorAll(".btn-dark")
     console.log(btnAddItem)
@@ -813,7 +817,7 @@ function btnAddTrackPlaylist() {
 
             console.log(found)
 
-            if (!found) { //SE NON TROVA UN UTENTE CON QUELLA STESSA SESISONE restituisce true se l'array è vuoto
+            if (!found) {     // se non trova una canzone, ma tanto la troverà sempre lo teniamo per sicurezza
                 console.log("non lo trovato")
                 return;
             }
@@ -932,6 +936,9 @@ function fillTableMyPL() {
 
     users[users.indexOf(utenteLoggato)]['Playlists'] ? MyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'] : MyPlaylist = [];//MyPlaylistIsEmpty();
 
+    console.log(MyPlaylist)
+    console.log(MyPlaylist.length)
+
     if (!MyPlaylist.length) {
         tableMyPlaylist.innerHTML = "<tr><td></td><td><strong>NON SONO PRESENTI PLAYLIST</strong></td><td></td><td></td></tr>"
         return;
@@ -942,6 +949,25 @@ function fillTableMyPL() {
     tableMyPlaylist.innerHTML = "";
 
     MyPlaylist.forEach(element => {
+
+        console.log(element)
+        console.log(element.tracks)
+
+        
+
+        let track_id = Date.now()
+
+        if (element.tracks.length) {
+            //tableMyPlaylist.innerHTML = "<tr><td></td><td><strong>ERRORE : SONO PRESENTI PLAYLIST SENZA CANZONI, QUESTE NON VERRANNO VISUALIZZATE</strong></td><td></td><td></td></tr>"
+            //track_id = Date.now()
+            //return;
+            track_id = element.tracks[0].id
+        }
+
+        console.log(element.tracks.name)
+        console.log(element.tracks.name)
+
+
         if (element.collaborative) {
             isPublic = "PUBBLICO";
         } else {
@@ -951,48 +977,284 @@ function fillTableMyPL() {
         console.log(element.tracks)
         console.log(element.tracks[0]) */
         //tableMyPlaylist.innerHTML += "<tr class='accordion-toggle collapsed' id='accordion1' data-toggle='collapse' data-parent='#accordion1' href='#collapseOne'><td class='expand-button' ></td><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button onclick='deletePlaylist(this)' id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
-        tableMyPlaylist.innerHTML += "<tr data-bs-toggle='collapse' href='#collapseExample"+element.tracks[0].id+"' role='button' aria-expanded='false' aria-controls='collapseExample' ><td></td><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button onclick='deletePlaylist(this)' id='btnDeleteMyPL" + element.tracks[0].id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + element.tracks[0].id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
+        tableMyPlaylist.innerHTML += "<tr data-bs-toggle='collapse' href='#collapseExample" + track_id + "' role='button' aria-expanded='false' aria-controls='collapseExample' ><td></td><td>" + element.name + "</td><td>" + element.description + "</td><td>" + isPublic + "</td><td><button onclick='deletePlaylist(this)' id='btnDeleteMyPL" + track_id + "' type='button' class='btn btn-danger'>X</button></td><td><button id='btnShowMyPL" + track_id + "' type='button' class='btn btn-primary'>X</button></td></tr>"
 
         //tableMyPlaylist.innerHTML += "<tr class='hide-table-padding'><td></td><td colspan='3'><div id='collapseOne' class='collapse in p-3'><div class='row'>CIAOOOO</div></div></td></tr>"
         //tableMyPlaylist.innerHTML += "<tr><td class='hiddenRow'><div id='demo3' class='accordian-body collapse'>Demo3 sadasdasdasdasdas</div></td></tr>"
-        tableMyPlaylist.innerHTML += "<tr class='collapse' id='collapseExample"+element.tracks[0].id+"'><td colspan='6' ><div id='ModifyPL'>  <div></td></tr>"
+        tableMyPlaylist.innerHTML += "<tr class='collapse' id='collapseExample" + track_id + "'><td colspan='6' ><div id='ModifyPL" + track_id + "'>  <div></td></tr>"
 
-        const ModifyPL = document.getElementById("ModifyPL");
+        const ModifyPL = document.getElementById("ModifyPL" + track_id);
 
-        const html = 
-        `
-        <div class="container-fluid">
-            <form action="" >
-                <div class="mb-3">
-                  <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
-                  <input type="text" class="form-control" value="${element.name}" >
-                </div>
-                <div class="mb-3">
-                  <label for="playlistDescription" class="form-label"><strong>Descrizione Playlist</strong></label>
-                  <input type="text" class="form-control" value="${element.description}">
-                </div>
-                <div class="mb-3">
+
+        
+
+        const html =
+            `
+        <div class="container-fluid divModifyPlaylist">
+        <br><br>
+            <form action="#" name="${element.name}"  id="formModifyPlaylist${track_id}" onsubmit="ModifyPlaylistById(this)">
+                
+                    
+                    <div class="mb-3 row">
+
+                    <label for="playlistName" class="form-label col-auto"><strong>Nome playlist</strong></label>
+
+                    <div class="col-3">
+                    <input type="text" name="MPLname" id="MPLname${track_id}" class="form-control" value="${element.name}" >
+                    </div>
+                    
+
+                    <label for="playlistDescription" class="form-label col-auto"><strong>Descrizione Playlist</strong></label>
+                    
+                    <div class="col-3">
+                    <input type="text" name="MPLdesc" id="MPLdesc${track_id}" class="form-control" value="${element.description}">
+                    </div>
+
                     <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
-                    <input type="text" class="form-control" value="${element.tag}">
-                  </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch">
+                    <div class="col-3">
+                    <input type="text" name="MPLtag_" id="MPLtag_${track_id}" class="form-control" value="${element.tag}">
+                    </div>
+                    </div>
+                    
+                
+                  <div class="form-check form-switch">
+                    <input class="form-check-input"  name="MPLcheck" id="MPLcheck${track_id}" type="checkbox" role="switch">
                     <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist pubblica</strong></label>
                 </div>
-                <button type="submit" class="btn btn-primary" >Salva</button> 
+                <hr>
+
+                <div id="Tracks${track_id}" class="container row">
+                
+                <table class="table table-condensed table-responsive">
+                    <thead>
+                        <tr class="table">
+                            <th class="th-sm col-1" scope="col"><strong>TITOLO</strong></th>
+                            <th class="th-sm col-3" scope="col"><strong>ARTISTA</strong></th>
+                            <th class="th-sm col-3" scope="col"><strong>ALBUM</strong></th>
+                            <th class="th-sm col-2" scope="col"><strong>AGGIUNTO IL</strong></th>
+                            <th class="th-sm col-2" scope="col"><strong>DURATION</strong></th>
+                            <th class="th-sm col-1" scope="col"><strong>Delete</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableMyPlaylist">
+                    </tbody>
+                </table>
+
+                </div>
+
+
+                <div class="mb-3 center" id="divSearchTrack">
+                    <label for="AddsearchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
+                    <input type="text" class="form-control center" onkeyup="SearchTrackOnSpotify(this)"; id="AddsearchTrack${track_id}"> 
+                  </div>
+
+                  <div class="center">
+                <button type="submit" class="btn btn-primary btn-lg" >Salva</button> 
+                </div>
 
             </form>
-        </div>
+
+            <div id="AddtrackList${track_id}" class="container" >
+                
+                </div>
+
+            </div>
         
         `;
 
         //console.log(rowItem)
-        ModifyPL.insertAdjacentHTML('afterbegin', html)
+        ModifyPL.insertAdjacentHTML('beforeend', html)
+
+        /////////////////////////////INIZIO PARTE RELATIVA LL'INTSERIMENTO DELLE CANZIONI PRESENTI IN UNA PL
+        const TracksElem = document.getElementById("Tracks"+track_id)
+        //TracksElem.innerHTML+="<br>"
+
+        element.tracks.forEach(elem => {
+            
+        const img = elem.album.images[2].url;
+
+        const title = elem.name;
+        const albumName = elem.album.name
+        const artist = elem.artists[0].name;
+        let duration = elem.duration_ms;
+
+        //convert ms to minute
+
+        const date = new Date(duration);
+
+        duration=`${date.getMinutes()}:${date.getSeconds()}`;
+        console.log(duration)
+        //end 
+
+        const release_date = elem.album.release_date;
+        const html =
+            `
+    <div class="col-1">
+        <img src="${img}" height="${elem.album.images[2].height}" width="${elem.album.images[2].width}" alt="">        
+    </div>
+    <div class="col-3">
+        <label for="Genre" class="form-label col-sm-12"><strong>${title}</strong></label>
+        <label for="artist" class="form-label col-sm-12"><strong>${artist}</strong></label>
+    </div>
+    <div class="col-3">
+    <label for="albumName" class="form-label col-sm-12"><strong>${albumName}</strong></label>
+    </div> 
+    <div class="col-2">
+    <label for="release_date" class="form-label col-sm-12"><strong>${release_date}</strong></label>
+    </div> 
+    <div class="col-2">
+    <label for="duration" class="form-label col-sm-12"><strong>${duration}</strong></label>
+    </div> 
+    <div class="col-1">
+    <button id='btnRemoveTrack${elem.id}' name="btnRemoveTrackName${element.name}" onclick='btnRemoveTrack(this)' type='button' class='btn btn-danger'>X</button>
+    </div> 
+    <br>
+    
+    `;
+        
+       /*  const rowItem = document.getElementById("rowItem" + element.id)
+        //console.log(rowItem)
+        TracksElem.insertAdjacentHTML('beforeend', html) */
+        TracksElem.insertAdjacentHTML('beforeend', html)
+        });
+
+        
+
+    });
 
 
-});
 
 };
+
+function btnRemoveTrack(sorgente){
+    console.log("ciao")
+    console.log(sorgente)
+    console.log(sorgente.id)
+    console.log(sorgente.name)
+    console.log(sorgente.name)
+
+    let playlists = users[users.indexOf(utenteLoggato)]['Playlists']
+
+    sorgente.name = sorgente.name.slice(-((sorgente.name).length - 18))
+    sorgente.id = sorgente.id.slice(-((sorgente.id).length - 14))
+    
+    console.log(sorgente.id)
+    
+    console.log((sorgente.name).slice(-((sorgente.name).length - 18)))
+    console.log(sorgente.name)
+
+    
+
+    const results = playlists.find(element => {
+        return element.name === sorgente.name
+    });
+
+    console.log(playlists.indexOf(results))
+    console.log(results)
+    console.log(playlists[playlists.indexOf(results)])
+
+    const copyTracks = users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)]
+    console.log(copyTracks)
+
+    console.log(copyTracks.tracks)
+
+    copyTracks.tracks = copyTracks.tracks.filter(element => !(element.id == (sorgente.id)))
+    //copyTracks.tracks = copyTracks.tracks.filter(element => console.log(element.id))
+    console.log(sorgente.id)
+
+    console.log(copyTracks.tracks)
+
+    users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)] = copyTracks;
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+    fillTableMyPL();
+
+
+
+/* 
+    result.forEach(element => {
+        //console.log(element);
+        //console.log(preference.indexOf(element));
+        copyTracks.tracks.splice(preference.indexOf(element), 1);
+    }); */
+
+    //copyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)]
+
+    /*
+    let preference = users[users.indexOf(utenteLoggato)]['Playlists']
+    console.log(sorgente.id)
+    console.log((sorgente.id).slice(-((sorgente.id).length - 13)))
+    const result = preference.filter(element => element.tracks[0].id == (sorgente.id).slice(-((sorgente.id).length - 13)))  //il -13 toglie la parte con "btn"
+
+    //console.log(preference)
+
+    // result è un array che contiene gli elementi da eliminare 
+    result.forEach(element => {
+        //console.log(element);
+        //console.log(preference.indexOf(element));
+        preference.splice(preference.indexOf(element), 1);
+    });
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] = preference;
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+
+    fillTableMyPL();
+
+
+    console.log(sorgente)
+    console.log(sorgente.name)
+    const results = playlists.find(element => {
+        return element.name === sorgente.name
+    });
+
+    console.log(playlists.indexOf(results))
+    console.log(results)
+    console.log(playlists[playlists.indexOf(results)])
+
+    copyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)]
+
+*/
+    
+}
+
+
+
+//${element.tracks[0].id}
+
+
+//CAMBIARE L'ORIGNALE PARAMETRIZZANDO LA FUNZIONE
+function SearchTrackOnSpotify(sorgente) {
+    console.log(sorgente);
+    console.log(sorgente.id);
+    console.log((sorgente.id).slice(-((sorgente.id).length - 14)));
+    let id = (sorgente.id).slice(-((sorgente.id).length - 14));
+    console.log(sorgente.name);
+    const AddsearchTrack = document.getElementById("AddsearchTrack" + id);
+    console.log(AddsearchTrack)
+    console.log(AddsearchTrack.value)
+    const urlSearch = "https://api.spotify.com/v1/search?type=album,artist,playlist,track,show,episode&q=" + AddsearchTrack.value;
+    getTrack(urlSearch, "AddtrackList" + id)
+
+
+    console.log(tracks)
+    /* console.log(playlist)
+
+    playlists.push(playlist);
+
+    console.log(playlists)
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] = playlists
+    localStorage.setItem('users', JSON.stringify(users));
+ */
+
+    //tracks = [];
+
+
+}
+
 
 //NON VIENE UTILIZZATA
 function MyPlaylistIsEmpty() {
@@ -1026,3 +1288,87 @@ function deletePlaylist(sorgente) {
     fillTableMyPL();
 
 }
+
+/* funzione che modifica i campi delle playlist e anche le canzoni poi  */
+function ModifyPlaylistById(sorgente) {
+
+    event.preventDefault();
+
+
+    users[users.indexOf(utenteLoggato)]['Playlists'] ? playlists = users[users.indexOf(utenteLoggato)]['Playlists'] : playlists = [];
+    /*
+        let playlist = {			// oggetto json registrazione 										
+            collaborative: collaborative.checked,
+            description: playlistdescription.value,
+            images: [{
+                url: "",
+                height: 300,
+                width: 300
+            }],
+            name: playlistName.value,
+            tag : tagPlaylist.value,
+            tracks: tracks
+        }
+    
+        console.log(tracks)
+        console.log(playlist)
+    
+        playlists.push(playlist);
+    
+        console.log(playlists)
+    
+        users[users.indexOf(utenteLoggato)]['Playlists'] = playlists
+        localStorage.setItem('users', JSON.stringify(users));
+    
+    
+        tracks = []; */
+    console.log(sorgente)
+    console.log(sorgente.name)
+    const results = playlists.find(element => {
+        return element.name === sorgente.name
+    });
+
+    console.log(playlists.indexOf(results))
+    console.log(results)
+    console.log(playlists[playlists.indexOf(results)])
+
+    copyPlaylist = users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)]
+
+
+    /* console.log(copyPlaylist)
+    console.log(sorgente.MPLname)
+    console.log(sorgente.MPLdesc.value)
+    console.log(sorgente.MPLtag_.value)
+    console.log(sorgente.MPLcheck.checked) */
+
+
+    copyPlaylist.name = sorgente.MPLname.value
+    copyPlaylist.description = sorgente.MPLdesc.value
+    copyPlaylist.tag = sorgente.MPLtag_.value
+    copyPlaylist.collaborative = sorgente.MPLcheck.checked
+    //copyPlaylist.tracks = sorgente.MPLcheck.checked
+
+    console.log()
+    copyPlaylist.tracks.push(...tracks)
+
+    console.log(tracks)
+
+    users[users.indexOf(utenteLoggato)]['Playlists'][playlists.indexOf(results)] = copyPlaylist
+
+    localStorage.setItem('users', JSON.stringify(users));
+
+    // utenteLoggato = results;
+
+    fillTableMyPL();
+    tracks = [];
+}
+
+
+
+//const AddsearchTrack = document.getElementById("AddsearchTrack")
+//AddsearchTrack.addEventListener('keyup', searchTrackSpotify)
+
+// se si crea una playlist vuota non me la salva perchè non si può creare una playlist senza canzoni  RISOLTO
+//stampare un alert CREAZIONE PLAYLIST AVVENUTA CON SUCCESSO!
+
+

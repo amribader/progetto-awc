@@ -191,7 +191,7 @@ formLogin.addEventListener('submit', (e) => {
 
 	//alert("passato")
 
-	//e.preventDefault();
+	e.preventDefault();
 
 	//GENERO UN TOKEN PER LA SESSIONE CORRENTE
 	//console.log(token())
@@ -227,6 +227,6 @@ formLogin.addEventListener('submit', (e) => {
 	//console.log("Ho trovato un utente");
 	//console.log(formLogin);
 	//alert("ciao")
-	//window.location.href=formLogin.getAttribute('action');
+	window.location.href=formLogin.getAttribute('action');
 })
 
