@@ -36,6 +36,7 @@
 </head>
 
 <body onload="customizePage()">
+    <!-- onload="getToken(), getCategories(), customizePage()"  NON SONO SICURO CHE SIA LA SCELTA MIGLIORE -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -127,20 +128,23 @@
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
                             onclick="settingPreference()">Preferenze</button>
                         <div class="dropdown">
-                            
-                        <button type="button" id="btnPlaylist" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-success list-group-item list-group-item-action dropdown-toggle"
-                        onclick="settingPlaylist()">Playlist</button>
-                        <ul class="dropdown-menu" aria-labelledby="btnPlaylist">
-                            <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick="">Nuova playlist</a></li>
-                            <li><a class="dropdown-item" id="liMyPlaylist" href="#">Le tue playlist</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                          </ul>
+
+                            <button type="button" id="btnPlaylist" data-bs-toggle="dropdown" aria-expanded="false"
+                                class="btn btn-success list-group-item list-group-item-action dropdown-toggle"
+                                onclick="settingPlaylist()">Playlist</button>
+                            <ul class="dropdown-menu" aria-labelledby="btnPlaylist">
+                                <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick="">Nuova playlist</a>
+                                </li>
+                                <li><a class="dropdown-item" id="liMyPlaylist" href="#">Le tue playlist</a></li>
+                                <li><a class="dropdown-item" id="liPublicPlaylist" href="#">Playlist pubbliche</a></li>
+                            </ul>
                         </div>
 
-                        <button type="button" class="btn btn-success list-group-item list-group-item-action">Comunità
+                        <button type="button" id="btnCommunity"
+                            class="btn btn-success list-group-item list-group-item-action">Comunità
                             condivisioni</button>
-                        <button type="button" class="btn btn-success list-group-item list-group-item-action">A second
-                            item</button>
+                        <button type="button" id="liMyCommunity"
+                            class="btn btn-success list-group-item list-group-item-action">All Community</button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
                             onclick="deleteUser()">cancella utente</button>
 
@@ -300,7 +304,7 @@
                             <input class="form-control" type="file" id="formFile" placeholder="selezione un'immagine"
                                 class="form-control">
                         </div> -->
- 
+
                         </div>
 
 
@@ -346,7 +350,7 @@
                 <!-- INIZIO DIV MOSTRA PLAYLIST -->
                 <div class="col-sm-10" id="divPlaylist">
                     <div class="container">
-                      <!--   <div class="row cant d-flex justify-content-center align-items-center">
+                        <!--   <div class="row cant d-flex justify-content-center align-items-center">
                             <div class="col-md-6">
                                 <div class="p-3 card">
                                     <div class="d-flex justify-content-between align-items-center p-3 music">
@@ -383,75 +387,152 @@
                             </div>
      
                         </div> -->
-                                                          
-        <!-- INIZIO DIV CREA PLAYLIST -->
-        <div class="container-fluid" id="CreaPlaylist">
-            <form action="" id="createPlaylist">
-                <div class="mb-3">
-                  <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
-                  <input type="text" class="form-control" required id="playlistName" value="" >
-                </div>
-                <div class="mb-3">
-                  <label for="playlistDescription" class="form-label"><strong>Descrizione Playlist</strong></label>
-                  <input type="text" class="form-control" required id="playlistDescription" value="">
-                </div>
-                <div class="mb-3">
-                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
-                    <input type="text" class="form-control" required id="tagPlaylist">
-                  </div>
-                <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="collaborative">
-                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist pubblica</strong></label>
-                  </div>
-                  <br>
-                  <div class="mb-3" id="divSearchTrack">
-                    <label for="searchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
-                    <input type="text" required class="form-control" id="searchTrack"> 
-                  </div>
-                <button type="submit" class="btn btn-primary" >Salva</button> 
-                <br>
-                <br>
 
-                <!-- div mostra truck della ricerca -->
-                <div id="trackList" class="container" >
-            
-                </div>
-                <!-- fine  div mostra truck della ricerca -->
+                        <!-- INIZIO DIV CREA PLAYLIST -->
+                        <div class="container-fluid" id="CreaPlaylist">
+                            <form action="" id="createPlaylist">
+                                <div class="mb-3">
+                                    <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
+                                    <input type="text" class="form-control" required id="playlistName" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="playlistDescription" class="form-label"><strong>Descrizione
+                                            Playlist</strong></label>
+                                    <input type="text" class="form-control" required id="playlistDescription" value="">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
+                                    <input type="text" class="form-control" required id="tagPlaylist">
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="collaborative">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist
+                                            pubblica</strong></label>
+                                </div>
+                                <br>
+                                <div class="mb-3" id="divSearchTrack">
+                                    <label for="searchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
+                                    <input type="text" required class="form-control" id="searchTrack">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Salva</button>
+                                <br>
+                                <br>
 
-              </form>
-        </div>
-        <!-- FINE DIV CREA PLAYLIST -->
-        <!-- INIZIO DIV MOSTRA MY PLAYLIST -->
-        <div class="container-fluid" id="MyPlaylist">
-            <div class="container-sm">
-                <table class="table table-condensed table-responsive">
-                    <thead>
-                        <tr class="table">
-                            <th scope="col">#</th>
-                            <th class="th-sm" scope="col"><strong>Name</strong></th>
-                            <th class="th-sm" scope="col"><strong>Description</strong></th>
-                            <th class="th-sm" scope="col"><strong>Collaborative</strong></th>
-                            <th class="th-sm" scope="col"><strong>Delete</strong></th>
-                            <th class="th-sm" scope="col"><strong>Modify</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableMyPlaylist">
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- FINE DIV MOSTRA MY PLAYLIST -->
+                                <!-- div mostra truck della ricerca -->
+                                <div id="trackList" class="container">
+
+                                </div>
+                                <!-- fine  div mostra truck della ricerca -->
+
+                            </form>
+                        </div>
+                        <!-- FINE DIV CREA PLAYLIST -->
+                        <!-- INIZIO DIV MOSTRA MY PLAYLIST -->
+                        <div class="container-fluid" id="MyPlaylist">
+                            <div class="container-sm">
+                                <table class="table table-condensed table-responsive">
+                                    <thead>
+                                        <tr class="table">
+                                            <th scope="col">#</th>
+                                            <th class="th-sm" scope="col"><strong>Name</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Description</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Collaborative</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Delete</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Modify</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tableMyPlaylist">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- FINE DIV MOSTRA MY PLAYLIST -->
+                        <!-- INIZIO DIV PLAYLIST PUBBLICHE-->
+                        <div class="container-fluid" id="PublicPlaylist">
+                            <div class="container-sm">
+                                <div class="mb-3">
+                                    <label for="searchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
+                                    <input type="text" required class="form-control" id="SearchPlaylistInput">
+                                </div>
+                                <div id="SearchPlaylist">
+
+                                </div>
+                                <table class="table table-condensed table-responsive">
+                                    <thead>
+                                        <tr class="table">
+                                            <th class="th-sm" scope="col">#</th>
+                                            <th class="th-sm" scope="col"><strong>Name</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Description</strong></th>
+                                            <th class="th-sm" scope="col"><strong>TAG</strong></th>
+                                            <th class="th-sm" scope="col"><strong>Delete</strong></th>
+                                            <th class="th-sm" scope="col"><strong>DURATION</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tablePublicPlaylist">
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                        <!-- FINE DIV PLAYLIST PUBBLICHE -->
 
 
-        
+
                     </div>
-         
+
                     <!-- <h1 style="color: red"> Playlist</h1> -->
                 </div>
                 <!-- FINE DIV  MOSTRA PLAYLIST -->
 
 
+                <!-- INIZIO DIV COMUNITà -->
+                <div id="divCommunity" class="col-sm-10">
+                    <div class="container-sm">
+                        <div class="center">
+                            <strong>CREATE YOUR FIRST COMMUNITY</strong>
+                            <hr>
+                        </div>
+                        <form action="" id="formCom" onsubmit='AddCommunity(event)'>
+                            <div class="container">
 
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="nomeCom" class="form-label"><strong>Nome
+                                                    Comunità</strong></label>
+                                            <input type="text" name="nomeCom" class="form-control" id="nomeCom"
+                                                required>
+                                            <div class="form-text">scegli un nome da dare alla tua comunità</div>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" required name="descCom" style="height: 100px"
+                                                id="descCom" placeholder="Leave a description here"></textarea>
+
+                                            <label for="descCom" class="form-label"><strong>Descrizione
+                                                    Comunità</strong></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div id="scegliUtenti" class="form-check form-switch">
+
+                                        </div>
+                                        <div id="scegliPlaylist">
+
+                                        </div>
+
+                                        <br>
+                                        <button type="submit" class="btn btn-primary"><strong>Salva comunità</strong></button>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- FINE DIV COMUNITà -->
 
             </div> <!-- FINE DIV COINTAINER "ROW" -->
 
