@@ -61,7 +61,7 @@ formRegistration.addEventListener('submit', (event) => {
 		//console.log("arrayVuoto");
 		//console.log(results.length);
 		showElement("reg_alert");
-		gestisciDanger("Esiste già un utente con questa password");
+		gestisciDanger("Esiste già un utente con questa email!");
 		return;
 	}
 
@@ -70,19 +70,32 @@ formRegistration.addEventListener('submit', (event) => {
 	// 👉️ [ {name: 'Carl', age: 30} ]
 	//console.log(results);
 	//console.log(results.length);
+	
+	const sessionID = token();
+
 
 	let utente = {			// oggetto json registrazione 										
 		nome: reg_nome.value,
 		password: reg_password.value,
-		email: reg_email.value
+		email: reg_email.value,
+		sessionID : sessionID
 	}
+
+	sessionStorage.setItem("sessionID", sessionID);
+
+	// Add new data to localStorage Array
+	//users[results]['sessionID'] = sessionID;
+
+	// Save back to localStorage
+	//localStorage.setItem('users', JSON.stringify(users));
 
 	users.push(utente);
 	window.localStorage.setItem('users', JSON.stringify(users))
 	//window.location.href = "home.html"
 	//console.log(utente)
 	//alert(reg_nome + " ti sei registrato con successo!")
-
+	
+	window.location.href=formRegistration.getAttribute('action');
 });
 
 

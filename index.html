@@ -26,7 +26,7 @@
 
 	<div class="container" id="container">
 		<div class="form-container sign-up-container">
-			<form id="formRegistration">
+			<form id="formRegistration" action="home.html">
 				<h1>Create Account</h1>
 				<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -36,7 +36,7 @@
 				<span>or use your email for registration</span>
 				<input type="text" placeholder="Name" id="nome" required value="utente1" />
 				<input type="email" placeholder="Email" id="email" required value="utente1@gmail.com" />
-				<input type="password" placeholder="Password" id="password" required value="utente1" />
+				<input type="password" placeholder="Password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" title="1 lower,1 upper, a number and almost 8 char" />
 				<button type="submit">Crea account</button>
 				<!-- <input type="submit" value="Crea account"> -->
 			</form>
