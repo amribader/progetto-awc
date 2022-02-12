@@ -40,7 +40,7 @@
     <!-- onload="getToken(), getCategories(), customizePage()"  NON SONO SICURO CHE SIA LA SCELTA MIGLIORE -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="nav-link disabled " >Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -49,19 +49,19 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link disabled" aria-current="page" >Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <a class="nav-link disabled" >Link</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             Dropdown
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                            <li><a class="dropdown-item disabled" >Action</a></li>
+                            <li><a class="dropdown-item disabled" >Another action</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -88,7 +88,7 @@
         </div>
         <br><br>
         <div>
-            <button type="button" id="btnSend" class="btn btn-success" onclick="salvaGeneri()">SALVA</button>
+            <button type="button" id="btnSend" class="btn btn-success" onclick="salvaGeneri(this)"><strong>SALVA</strong></button>
           <!--   <button type="button" class="btn btn-success">Success</button> -->
         </div>
 
@@ -121,33 +121,33 @@
 
                     <div id="AccountSetting" class="list-group">
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
-                            aria-current="true" id="profile" name="profile" onclick="settingProfile()">
-                            Profile 
+                            aria-current="true" id="profile" name="profile"  onclick="settingProfile()">
+                            <strong>  Profile </strong>
                         </button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
-                            id="account" name="account" onclick="settingAccount()">Account </button>
+                            id="account" name="account" onclick="settingAccount()"><strong>Account</strong> </button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
-                            onclick="settingPreference()">Preferenze</button>
+                            onclick="settingPreference()"><strong>Preferenze</strong></button>
                         <div class="dropdown">
 
                             <button type="button" id="btnPlaylist" data-bs-toggle="dropdown" aria-expanded="false"
                                 class="btn btn-success list-group-item list-group-item-action dropdown-toggle"
-                                onclick="settingPlaylist()">Playlist</button>
+                                onclick="settingPlaylist()"><strong>Playlist</strong></button>
                             <ul class="dropdown-menu" aria-labelledby="btnPlaylist">
-                                <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick="">Nuova playlist</a>
+                                <li><a class="dropdown-item" id="liNewPlaylist" href="#" onclick=""><strong>Nuova playlist</strong></a>
                                 </li>
-                                <li><a class="dropdown-item" id="liMyPlaylist" href="#">Le tue playlist</a></li>
-                                <li><a class="dropdown-item" id="liPublicPlaylist" href="#">Playlist pubbliche</a></li>
+                                <li><a class="dropdown-item" id="liMyPlaylist" href="#"><strong>Le tue playlist</strong></a></li>
+                                <li><a class="dropdown-item" id="liPublicPlaylist" href="#"><strong>Playlist pubbliche</strong></a></li>
                             </ul>
                         </div>
 
                         <button type="button" id="btnCommunity"
-                            class="btn btn-success list-group-item list-group-item-action">Comunità
-                            condivisioni</button>
+                            class="btn btn-success list-group-item list-group-item-action"><strong>Comunità
+                            condivisioni</strong></button>
                         <button type="button" id="liMyCommunity"
-                            class="btn btn-success list-group-item list-group-item-action">All Community</button>
+                            class="btn btn-success list-group-item list-group-item-action"><strong>All Community</strong></button>
                         <button type="button" class="btn btn-success list-group-item list-group-item-action"
-                            onclick="deleteUser()">cancella utente</button>
+                            onclick="deleteUser()"><strong>Cancella utente</strong></button>
 
                     </div>
 
@@ -289,17 +289,21 @@
                                 class="form-control" style="width: 500px;"> -->
                             </div>
                         </div>
-                        <div class="row" style="margin: 30px 30px 30px 5px" id="immagineProfilo1">
+                        <div class="row" style="margin: 30px 30px 30px 5px">
                             <h5>Immagine del profilo</h5>
                             <div class="col">
                                 <!-- <label for="profileName" class="form-label"><strong>cambia nome utente</strong></label> -->
                                 <input class="form-control" type="file" id="formFile"
-                                    placeholder="seleziona un'immagine" class="form-control" style="width: 500px;">
+                                    placeholder="seleziona un'immagine" class="form-control" style="width: 500px;" disabled>
                             </div>
                             <div class="col">
-                                <button type="button" class="btn btn-outline-success" id="cambiaImg">Cambia
+                                <button type="button" class="btn btn-outline-success" id="cambiaImg">Mostra
                                     immagine</button>
                             </div>
+                            <div id="immagineProfilo1" >
+
+                            </div>
+                        
                             <!-- <div class="mb-3">
                             <label for="formFile" class="form-label"><strong>Immagine del profilo</strong></label>
                             <input class="form-control" type="file" id="formFile" placeholder="selezione un'immagine"
@@ -316,7 +320,7 @@
 
                 <!-- INIZIO DIV PREFERENZE -->
                 <div id="modifyPreference" class="col-sm-10">
-                    <div class="container">
+                    <div class="container center" >
                         <h5>Per aggiungere delle preferenze clicca qui</h5>
                         <button type="button" class="btn btn-success" id="btnAddPreference">Preferenze</button>
                     </div>
@@ -392,30 +396,48 @@
                         <!-- INIZIO DIV CREA PLAYLIST -->
                         <div class="container-fluid" id="CreaPlaylist">
                             <form action="" id="createPlaylist">
-                                <div class="mb-3">
-                                    <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
-                                    <input type="text" class="form-control" required id="playlistName" value="">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="playlistName" class="form-label"><strong>Nome playlist</strong></label>
+                                            <input type="text" class="form-control" required id="playlistName" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="playlistDescription" class="form-label"><strong>Descrizione
+                                                    Playlist</strong></label>
+                                            <input type="text" class="form-control" required id="playlistDescription" value="">
+                                        </div>
+                                    </div>
+                                
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
+                                            <input type="text" class="form-control" required id="tagPlaylist">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check form-switch center">
+                                            <label class="form-check-label" for="collaborative"><strong>Playlist
+                                                pubblica</strong></label>
+                                                <br>
+                                                <div class="center">
+                                                    <input class="form-check-input" type="checkbox" role="switch" id="collaborative">
+                                                </div>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="playlistDescription" class="form-label"><strong>Descrizione
-                                            Playlist</strong></label>
-                                    <input type="text" class="form-control" required id="playlistDescription" value="">
+                                
+                                <div class="mb-3 center center" id="divSearchTrack">
+                                    <label for="searchTrack" class="form-label center"><strong>Cerca canzoni</strong></label>
+                                    <input type="text" required class="form-control center" id="searchTrack">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="tagPlaylist" class="form-label"><strong>Tag playlist</strong></label>
-                                    <input type="text" class="form-control" required id="tagPlaylist">
+                                <div class="center container">
+                                    <button type="submit" class="btn btn-primary center">Salva</button>
                                 </div>
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch" id="collaborative">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault"><strong>Playlist
-                                            pubblica</strong></label>
-                                </div>
-                                <br>
-                                <div class="mb-3" id="divSearchTrack">
-                                    <label for="searchTrack" class="form-label"><strong>Cerca canzoni</strong></label>
-                                    <input type="text" required class="form-control" id="searchTrack">
-                                </div>
-                                <button type="submit" class="btn btn-primary">Salva</button>
+                               
                                 <br>
                                 <br>
 
@@ -534,22 +556,25 @@
                 </div>
                 <!-- FINE DIV COMUNITà -->
                 <!-- INIZIO DIV all COMUNITà -->
-                <div class="container-fluid" id="MyAllCommunity">
-                    <div class="container-sm">
-                        
-                        <table class="table table-condensed table-responsive">
-                            <thead>
-                                <tr class="table">
-                                    <th class="th-sm" scope="col"><strong>Name</strong></th>
-                                    <th class="th-sm" scope="col"><strong>Owner</strong></th>
-                                    <th class="th-sm" scope="col"><strong>Members</strong></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableMyAllCommunity">
-                            </tbody>
-                        </table>
+                <div class="col-sm-10">
+                    <div class="container-fluid" id="MyAllCommunity">
+                        <div class="container-sm">
+                            
+                            <table class="table table-condensed table-responsive">
+                                <thead>
+                                    <tr class="table">
+                                        <th class="th-sm" scope="col"><strong>Name</strong></th>
+                                        <th class="th-sm" scope="col"><strong>Owner</strong></th>
+                                        <th class="th-sm" scope="col"><strong>Members</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableMyAllCommunity">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+                
                 <!-- FINE DIV all COMUNITà -->
 
 
@@ -583,6 +608,38 @@
                       </div>
                     </div>
                   </div> -->
+                <!-- FINE DIV PL COMUNITà -->
+                <!-- INIZIO DIV PL COMUNITà -->    <!-- VIENE SPOSTATO IN JS PER PROBLEMI CON LA GESTIONE DEI VARI ID -->
+                <div class="container">
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <table class="table table-condensed table-responsive" id="tableCommunityPL">
+                                                      <thead>
+                                                          <tr class="table">
+                                                              <th class="th-sm" scope="col">#</th>
+                                                              <th class="th-sm" scope="col"><strong>Name</strong></th>
+                                                              <th class="th-sm" scope="col"><strong>Description</strong></th>
+                                                              <th class="th-sm" scope="col"><strong>TAG</strong></th>
+                                                              <th class="th-sm" scope="col"><strong>Delete</strong></th>
+                                                          </tr>
+                                                      </thead>
+                                                      
+                                                  </table>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
                 <!-- FINE DIV PL COMUNITà -->
 
             </div> <!-- FINE DIV COINTAINER "ROW" -->

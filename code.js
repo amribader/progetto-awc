@@ -51,7 +51,6 @@ formRegistration.addEventListener('submit', (event) => {
 
 	const results = users.filter(element => {
 		//console.log(element.email + " " + reg_email.value)
-		// 👇️ using AND (&&) operator
 		return element.email == reg_email.value;
 	});
 
@@ -67,7 +66,6 @@ formRegistration.addEventListener('submit', (event) => {
 
 	//console.log(results.length)
 
-	// 👉️ [ {name: 'Carl', age: 30} ]
 	//console.log(results);
 	//console.log(results.length);
 	
@@ -101,7 +99,7 @@ formRegistration.addEventListener('submit', (event) => {
 
 
 function gestisciDanger(params) {
-	reg_alert.innerHTML += "Errore: " + params + "<br>";
+	reg_alert.innerHTML = "Errore: " + params + "<br>";
 }
 
 function hideElement(id) {
@@ -118,7 +116,7 @@ function showElement(id) {
 formLogin.addEventListener('submit', (e) => {
 
 	hideElement("reg_alert");
-	gestisciDanger("");
+	//gestisciDanger("");
 
 
 	//console.log("submit evebt kstener")
@@ -190,11 +188,11 @@ formLogin.addEventListener('submit', (e) => {
 	console.log(results)
 	//console.log(users.findIndex(results))
 
-	if (results == -1) {//restituisce true se l'array è vuoto
+	if (results == -1) {//restituisce true se l'array è vuoto o -1 
 		e.preventDefault();
 		showElement("reg_alert");
 		gestisciDanger("Non esiste un utente con questo indirizzo mail o la password è errata!");
-		alert("non sono passato")
+		//alert("non sono passato")
 		return;
 	}
 

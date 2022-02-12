@@ -192,18 +192,14 @@ html {
 
 */
 .containerDiv {
-
- 
   display: flex;/* 
   font-family: "Inter", Arial; */
   font-family: 'Oswald', sans-serif;
   justify-content: center;
   align-items: center;
-  
-
 }
 
- .grid {
+.grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1rem;
