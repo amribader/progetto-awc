@@ -2375,7 +2375,7 @@ function fillCommunity() {
         
     }*/
     result ? myCommunity.push(result) : //console.log("L'utente loggato non ha appartiene a nessuna Comunità")
-    ////console.log(myCommunity)
+    console.log(myCommunity)
     //fillPublicPlaylist(PublicPL,"tableCommunityPlaylist");
 
     //constrollo se l'utente loggato è il proprietario di una qualche comunità
@@ -2386,13 +2386,15 @@ function fillCommunity() {
         //return ////////console.log(element);
     });
     ////////console.log(typeof community);
-    ////////console.log(result);
+    console.log(result);
 
     if (!result) {//se è undifined
         ////////console.log('Lutente loggato è il proprietario di una nessuna Comunità: ${result}')
         // return
     }
+    console.log(myCommunity)
     myCommunity.push(...result);
+    //myCommunity.push(...result);
     /* 
     community.forEach(element => {
         ////////console.log(element)
@@ -2474,10 +2476,13 @@ function fillTableMyCommunity(community, div) {//primo parametro array da popola
     rowSetting.insertAdjacentHTML('beforeend', results)
 
 */
-
+    console.log(community)
+    //qui
+    community = [...new Map(community.map(item => [item.communityID, item])).values()]
+    
     community.forEach((element, index) => {
 
-        //console.log(element, index)
+        console.log(element, index)
         id = element.communityID
         title = element.nome
         owner = element.owner.nome
